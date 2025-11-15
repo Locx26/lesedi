@@ -16,7 +16,6 @@ public class BankTeller extends User {
         this.position = position;
     }
 
-    @Override
     public boolean login(String username, String password) {
         if (this.userId.equals(username) && verifyPassword(password, this.passwordHash)) {
             System.out.println("Bank Teller " + employeeId + " logged in successfully");

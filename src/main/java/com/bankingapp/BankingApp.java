@@ -3,24 +3,79 @@ package com.bankingapp;
 import com.bankingapp.view.LoginView;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * Main Banking Application Class
+ * Initializes and launches the JavaFX banking application
+ */
 public class BankingApp extends Application {
+
+    private Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) {
-        // Create the login view (boundary class)
-        LoginView loginView = new LoginView();
+        this.primaryStage = primaryStage;
+        initializeApplication();
+    }
 
-        // Create scene and setup stage
-        Scene scene = new Scene(loginView.getView(), 400, 300);
-        primaryStage.setTitle("Banking System - Login");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+    private void initializeApplication() {
+        try {
+            // Create the login view (boundary class)
+            LoginView loginView = new LoginView();
+
+            // Create scene with CSS styling
+            Scene scene = new Scene(loginView.getView(), 900, 650);
+            scene.getStylesheets().add(getClass().getResource("/com/bankingapp/styles/banking.css").toExternalForm());
+
+            // Configure primary stage
+            primaryStage.setTitle("SecureTrust Banking System");
+            primaryStage.setScene(scene);
+            primaryStage.setMinWidth(800);
+            primaryStage.setMinHeight(600);
+           
+            // Set application icon
+            try {
+                primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/bankingapp/images/bank-icon.png")));
+            } catch (Exception e) {
+                System.out.println("Icon not found, using default");
+            }
+
+            primaryStage.show();
+           
+            // Center window on screen
+            primaryStage.centerOnScreen();
+
+        } catch (Exception e) {
+            showErrorDialog("Application Initialization Error",
+                "Failed to initialize banking application: " + e.getMessage());
+        }
+    }
+
+    private void showErrorDialog(String title, String message) {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
+            javafx.scene.control.Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     public static void main(String[] args) {
-        launch(args);
+        System.out.println("Starting SecureTrust Banking System...");
+        System.out.println("Java Version: " + System.getProperty("java.version"));
+        System.out.println("JavaFX Version: " + System.getProperty("javafx.version"));
+       
+        try {
+            launch(args);
+        } catch (Exception e) {
+            System.err.println("Application launch failed: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

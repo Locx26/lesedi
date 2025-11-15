@@ -1,97 +1,68 @@
 package com.bankingapp.model;
-import com.bankingapp.enums.AccountStatus;
-import com.bankingapp.enums.TransactionType;
-import java.util.ArrayList;
-import java.util.List;
 
-public abstract class Account {
-    protected String accountNumber;
-    protected double balance;
-    protected String branch;
-    protected AccountStatus status;
-    protected Customer customer;
-    protected List<Transaction> transactions;
+import com.bankingapp.enums.AccountType;
+import java.time.LocalDateTime;
 
-    public Account(String accountNumber, double initialBalance, String branch) {
+public class Account {
+    private String accountId;
+    private String userId;
+    private String accountNumber;
+    private AccountType accountType;
+    private double balance;
+    private double interestRate;
+    private LocalDateTime openedDate;
+    private boolean active;
+
+    public Account(String accountId, String userId, String accountNumber,
+                   AccountType accountType, double initialBalance) {
+        this.accountId = accountId;
+        this.userId = userId;
         this.accountNumber = accountNumber;
+        this.accountType = accountType;
         this.balance = initialBalance;
-        this.branch = branch;
-        this.status = AccountStatus.ACTIVE;
-        this.transactions = new ArrayList<>();
-
-        if (initialBalance > 0) {
-            Transaction initialDeposit = new Transaction(
-                "TXN_INIT_" + accountNumber,
-                initialBalance,
-                TransactionType.DEPOSIT,
-                "Initial deposit",
-                balance
-            );
-            transactions.add(initialDeposit);
-        }
+        this.interestRate = accountType.getInterestRate();
+        this.openedDate = LocalDateTime.now();
+        this.active = true;
     }
 
+    // Getters
+    public String getAccountId() { return accountId; }
+    public String getUserId() { return userId; }
+    public String getAccountNumber() { return accountNumber; }
+    public AccountType getAccountType() { return accountType; }
+    public double getBalance() { return balance; }
+    public double getInterestRate() { return interestRate; }
+    public LocalDateTime getOpenedDate() { return openedDate; }
+    public boolean isActive() { return active; }
+
+    // Business methods (no UI logic - pure business logic)
     public boolean deposit(double amount) {
-        if (amount > 0 && status == AccountStatus.ACTIVE) {
+        if (amount > 0) {
             balance += amount;
-            Transaction transaction = new Transaction(
-                generateTransactionId(),
-                amount,
-                TransactionType.DEPOSIT,
-                "Deposit",
-                balance
-            );
-            transactions.add(transaction);
-            System.out.println("Deposited: $" + amount + " to account: " + accountNumber);
             return true;
         }
-        System.out.println("Deposit failed for account: " + accountNumber);
         return false;
     }
 
-    public abstract boolean withdraw(double amount);
-    public abstract void calculateInterest();
-
-    public List<Transaction> getTransactionHistory() {
-        return new ArrayList<>(transactions);
-    }
-
-    public void printTransactionHistory() {
-        System.out.println("Transaction History for Account: " + accountNumber);
-        for (Transaction transaction : transactions) {
-            System.out.println("  " + transaction);
+    public boolean withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            return true;
         }
+        return false;
     }
 
-    protected String generateTransactionId() {
-        return "TXN_" + accountNumber + "_" + System.currentTimeMillis();
+    public void applyInterest() {
+        balance += balance * interestRate;
     }
 
-    public void freezeAccount() {
-        this.status = AccountStatus.FROZEN;
-        System.out.println("Account " + accountNumber + " has been frozen");
+    public String getFormattedBalance() {
+        return String.format("$%.2f", balance);
     }
-
-    public void activateAccount() {
-        this.status = AccountStatus.ACTIVE;
-        System.out.println("Account " + accountNumber + " has been activated");
-    }
-
-    public void closeAccount() {
-        this.status = AccountStatus.CLOSED;
-        System.out.println("Account " + accountNumber + " has been closed");
-    }
-
-    public String getAccountNumber() { return accountNumber; }
-    public double getBalance() { return balance; }
-    public String getBranch() { return branch; }
-    public AccountStatus getStatus() { return status; }
-    public Customer getCustomer() { return customer; }
-    public void setCustomer(Customer customer) { this.customer = customer; }
 
     @Override
     public String toString() {
-        return String.format("Account[%s]: Balance: $%.2f, Status: %s, Branch: %s",
-                           accountNumber, balance, status, branch);
+        return String.format("Account{number=%s, type=%s, balance=%.2f}",
+            accountNumber, accountType, balance);
     }
 }
