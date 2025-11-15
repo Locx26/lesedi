@@ -1,14 +1,13 @@
 package com.bankingapp.enums;
 
-public enum TransactionType {
-    DEPOSIT("Deposit"),
-    WITHDRAWAL("Withdrawal"),
-    TRANSFER("Transfer"),
-    INTEREST("Interest");
+public enum UserRole {
+    CUSTOMER("Customer"),
+    BANK_TELLER("Bank Teller"),
+    ADMIN("Administrator");
 
     private final String displayName;
 
-    TransactionType(String displayName) {
+    UserRole(String displayName) {
         this.displayName = displayName;
     }
 
