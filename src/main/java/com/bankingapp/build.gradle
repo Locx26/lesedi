@@ -26,6 +26,7 @@ dependencies {
     // JavaFX dependencies are added by the plugin
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
     testImplementation 'org.testfx:testfx-junit5:4.0.16-alpha'
+    testImplementation 'org.assertj:assertj-core:3.24.2'
 }
 
 mainClassName = 'com.bankingapp.BankingApp'
@@ -52,4 +53,10 @@ jlink {
             installerOptions += ['--win-per-user-install', '--win-dir-chooser', '--win-menu']
         }
     }
+}
+
+// Create a task to run the application with tests
+task fullTest(type: Exec) {
+    dependsOn test
+    commandLine 'java', '--module-path', 'build/libs', '--module', 'com.bankingapp'
 }
