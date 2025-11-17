@@ -9,7 +9,7 @@
             "projectName": "securetrust-banking-system",
             "vmArgs": [
                 "--module-path",
-                "C:\\Users\\gobot\\.jdks\\javafx-sdk-24.0.1\\src",
+                "C:\\Users\\gobot\\.jdks\\javafx-sdk-24.0.1\\lib",
                 "--add-modules",
                 "javafx.controls,javafx.fxml,javafx.graphics",
                 "--add-opens",
@@ -35,7 +35,7 @@
             "request": "launch",
             "mainClass": "com.bankingapp.BankingApp",
             "projectName": "securetrust-banking-system",
-            "vmArgs": "--module-path C:\\Users\\gobot\\.jdks\\javafx-sdk-24.0.1\\src --add-modules javafx.controls,javafx.fxml,javafx.graphics --add-opens javafx.graphics/javafx.scene=ALL-UNNAMED --add-opens javafx.controls/javafx.scene.control=ALL-UNNAMED -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+            "vmArgs": "--module-path C:\\Users\\gobot\\.jdks\\javafx-sdk-24.0.1\\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics --add-opens javafx.graphics/javafx.scene=ALL-UNNAMED --add-opens javafx.controls/javafx.scene.control=ALL-UNNAMED -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
         }
     ]
 }
