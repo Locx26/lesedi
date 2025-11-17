@@ -83,14 +83,12 @@ public class BankingApp extends Application {
     public static void main(String[] args) {
         System.out.println("Starting SecureTrust Banking System...");
         System.out.println("Java Version: " + System.getProperty("java.version"));
-        System.out.println("JavaFX Version: " + System.getProperty("javafx.version"));
         System.out.println("Architecture: MVC Pattern with layered services");
-       
         try {
-            launch(args);
+            Application.launch(BankingApp.class, args);
         } catch (Exception e) {
             System.err.println("Application launch failed: " + e.getMessage());
             e.printStackTrace();
         }
     }
-} 
+}
