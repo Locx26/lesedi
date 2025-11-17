@@ -1,0 +1,62 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Maven: Run JavaFX Application",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "compile",
+                "javafx:run",
+                "-Djavafx.verbose=true"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Maven: Compile",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "clean",
+                "compile"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Maven: Package",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "clean",
+                "package",
+                "-DskipTests"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Maven: Run Tests",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "test"
+            ],
+            "group": "test"
+        },
+        {
+            "label": "Maven: Clean",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "clean"
+            ],
+            "group": "build"
+        }
+    ]
+}

@@ -1,3 +1,29 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "maven.terminal.useJavaHome": true,
+    "maven.terminal.customEnv": [
+        {
+            "environmentVariable": "JAVA_HOME",
+            "value": "C:\\Users\\gobot\\.jdks\\openjdk-24.0.1"
+        }
+    ],
+    "java.jdt.ls.java.home": "C:\\Users\\gobot\\.jdks\\openjdk-24.0.1",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.test.config": [
+        {
+            "name": "Maven",
+            "workingDirectory": "${workspaceFolder}",
+            "vmargs": [
+                "--add-opens",
+                "javafx.graphics/javafx.scene=ALL-UNNAMED",
+                "--add-opens",
+                "javafx.controls/javafx.scene.control=ALL-UNNAMED"
+            ]
+        }
+    ],
+    "java.test.defaultConfig": "Maven"
 }
