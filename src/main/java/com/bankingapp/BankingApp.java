@@ -223,7 +223,7 @@ public class BankingApp {
         try {
             com.bankingapp.controller.WebServer.start(8080);
             System.out.println("✅ Web services started successfully");
-            System.out.println("🔗 Access the application via: [http://localhost:8080")]http://localhost:8080");
+            System.out.println("🔗 Access the application via: http://localhost:8080");
             System.out.println("📚 API documentation available at: http://localhost:8080/api/health");
             System.out.println("\n🚀 Banking System is now running in headless mode");
             System.out.println("   Press Ctrl+C to stop the application");
