@@ -3,39 +3,19 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch with Maven",
+            "name": "Launch Banking App",
             "request": "launch",
             "mainClass": "com.bankingapp.BankingApp",
             "projectName": "securetrust-banking-system",
-            "vmArgs": [
-                "--module-path",
-                "C:\\Users\\gobot\\.jdks\\javafx-sdk-24.0.1\\lib",
-                "--add-modules",
-                "javafx.controls,javafx.fxml,javafx.graphics",
-                "--add-opens",
-                "javafx.graphics/javafx.scene=ALL-UNNAMED",
-                "--add-opens",
-                "javafx.controls/javafx.scene.control=ALL-UNNAMED"
-            ],
-            "console": "internalConsole"
+            "vmArgs": "--module-path /opt/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics --add-opens javafx.graphics/javafx.scene=ALL-UNNAMED"
         },
         {
             "type": "java",
-            "name": "Run Maven javafx:run",
+            "name": "Run in Headless Mode",
             "request": "launch",
             "mainClass": "com.bankingapp.BankingApp",
             "projectName": "securetrust-banking-system",
-            "args": "",
-            "vmArgs": "",
-            "preLaunchTask": "maven: javafx:run"
-        },
-        {
-            "type": "java",
-            "name": "Debug Banking App",
-            "request": "launch",
-            "mainClass": "com.bankingapp.BankingApp",
-            "projectName": "securetrust-banking-system",
-            "vmArgs": "--module-path C:\\Users\\gobot\\.jdks\\javafx-sdk-24.0.1\\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics --add-opens javafx.graphics/javafx.scene=ALL-UNNAMED --add-opens javafx.controls/javafx.scene.control=ALL-UNNAMED -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+            "args": ["--headless"]
         }
     ]
 }

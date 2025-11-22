@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  banking-system:
+    build: .
+    ports:
+      - "8080:8080"
+      - "7000:7000"
+    environment:
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    volumes:
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  # Database (if using external database)
+  database:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: banking
+      POSTGRES_USER: bankinguser
+      POSTGRES_PASSWORD: bankingpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  db_data:

@@ -1,62 +1,37 @@
 package com.bankingapp.model;
-import com.bankingapp.enums.TransactionType;
-import com.bankingapp.enums.AccountStatus;
 
 public class ChequeAccount extends Account {
-    private String employerName;
+    private String employer;
     private String employerAddress;
-    private static final double MONTHLY_FEE = 10.0;
 
-    public ChequeAccount(String accountNumber, double initialBalance, String branch,
-                       String employerName, String employerAddress) {
-        super(accountNumber, initialBalance, branch);
-        this.employerName = employerName;
+    public ChequeAccount(String accountNumber, double balance, String branch, Customer customer,
+                        String employer, String employerAddress) {
+        super(accountNumber, balance, branch, customer);
+        this.employer = employer;
         this.employerAddress = employerAddress;
+        this.accountType = AccountType.CHEQUE;
     }
 
     @Override
-    public boolean withdraw(double amount) {
-        if (amount > 0 && amount <= balance && status == AccountStatus.ACTIVE) {
-            balance -= amount;
-            Transaction transaction = new Transaction(
-                generateTransactionId(),
-                amount,
-                TransactionType.WITHDRAWAL,
-                "Withdrawal",
-                balance
-            );
-            transactions.add(transaction);
-            System.out.println("Withdrawn: $" + amount + " from Cheque Account: " + accountNumber);
-            return true;
-        }
-        System.out.println("Withdrawal failed from Cheque Account: " + accountNumber);
-        return false;
+    public boolean canWithdraw() {
+        return true;
     }
 
     @Override
-    public void calculateInterest() {
-        System.out.println("Interest calculation not applicable for Cheque Account: " + accountNumber);
+    public boolean canDeposit() {
+        return true;
     }
 
-    public void deductMonthlyFee() {
-        if (balance >= MONTHLY_FEE && status == AccountStatus.ACTIVE) {
-            balance -= MONTHLY_FEE;
-            Transaction feeTransaction = new Transaction(
-                generateTransactionId(),
-                MONTHLY_FEE,
-                TransactionType.FEE,
-                "Monthly account fee",
-                balance
-            );
-            transactions.add(feeTransaction);
-            System.out.println("Monthly fee of $" + MONTHLY_FEE +
-                              " deducted from Cheque Account: " + accountNumber);
-        } else {
-            System.out.println("Insufficient funds to deduct monthly fee from Cheque Account: " + accountNumber);
-        }
+    @Override
+    public void applyMonthlyInterest() {
+        // Cheque accounts don't earn interest
+        System.out.println("No interest applied to cheque account: " + accountNumber);
     }
 
-    public String getEmployerName() { return employerName; }
+    // Getters and setters
+    public String getEmployer() { return employer; }
     public String getEmployerAddress() { return employerAddress; }
-    public static double getMonthlyFee() { return MONTHLY_FEE; }
+   
+    public void setEmployer(String employer) { this.employer = employer; }
+    public void setEmployerAddress(String employerAddress) { this.employerAddress = employerAddress; }
 }

@@ -1,0 +1,117 @@
+name: Java CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+   
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+     
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'maven'
+       
+    - name: Validate project structure
+      run: |
+        echo "🔍 Validating project structure..."
+        [ -f pom.xml ] && echo "✅ pom.xml found" || exit 1
+        [ -d src/main/java ] && echo "✅ Java source directory found" || exit 1
+        [ -d src/test/java ] && echo "✅ Test directory found" || exit 1
+        echo "📁 Project structure validation passed"
+       
+    - name: Run unit tests
+      run: mvn test
+     
+    - name: Run integration tests
+      run: mvn verify -DskipUnitTests=false
+     
+    - name: Generate test report
+      run: |
+        mvn surefire-report:report
+        echo "📊 Test report generated"
+       
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-reports
+        path: target/site/*
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+   
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+     
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'maven'
+       
+    - name: Build with Maven
+      run: mvn clean compile package -DskipTests
+     
+    - name: Run security scan
+      run: |
+        echo "🔒 Running security checks..."
+        mvn org.owasp:dependency-check-maven:check
+        echo "✅ Security scan completed"
+       
+    - name: Check code quality
+      run: |
+        echo "📏 Checking code quality..."
+        mvn pmd:check
+        mvn checkstyle:check
+        echo "✅ Code quality checks passed"
+       
+    - name: Build Docker image
+      run: |
+        echo "🐳 Building Docker image..."
+        docker build -t banking-system:latest .
+        echo "✅ Docker image built successfully"
+       
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: banking-system-jar
+        path: target/*.jar
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+   
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+     
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs
+        keep_files: true
+       
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: target/*.jar
+        body: "Automated release of SecureTrust Banking System"
+       
+    - name: Notify success
+      run: |
+        echo "🎉 Deployment completed successfully!"
+        echo "Application deployed and release created"

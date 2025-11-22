@@ -1,0 +1,38 @@
+{
+    "name": "Secure Trust Banking System",
+    "image": "mcr.microsoft.com/devcontainers/java:1-17-bullseye",
+    "features": {
+        "ghcr.io/devcontainers/features/desktop-lite:1": {},
+        "ghcr.io/devcontainers/features/java:1": {
+            "version": "17",
+            "jdkDistro": "ms",
+            "installMaven": true
+        }
+    },
+    "forwardPorts": [8080, 6080, 7000],
+    "portsAttributes": {
+        "8080": {
+            "label": "Banking App Web Interface",
+            "onAutoForward": "notify"
+        },
+        "6080": {
+            "label": "NoVNC Desktop",
+            "onAutoForward": "notify"
+        }
+    },
+    "postCreateCommand": "bash .devcontainer/setup-codespaces.sh",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "vscjava.vscode-java-pack",
+                "vscjava.vscode-maven",
+                "redhat.java",
+                "ms-vscode.live-server"
+            ],
+            "settings": {
+                "java.configuration.updateBuildConfiguration": "automatic",
+                "java.compile.nullAnalysis.mode": "automatic"
+            }
+        }
+    }
+}
