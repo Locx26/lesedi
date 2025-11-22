@@ -29,7 +29,7 @@ public class WebServer {
         server.start();
        
         System.out.println("🔗 Web Server started on port " + port);
-        System.out.println("🌐 Access the application at: [http://localhost:"]http://localhost:" + port);
+        System.out.println("🌐 Access the application at: http://localhost:" + port);
     }
    
     public static void stop() {

@@ -1,16 +1,20 @@
 package com.bankingapp.model;
 
-public class SavingsAccount extends Account {
-    private static final double MONTHLY_INTEREST_RATE = 0.0005; // 0.05%
+public class InvestmentAccount extends Account {
+    private static final double MONTHLY_INTEREST_RATE = 0.05; // 5%
+    private static final double MIN_OPENING_BALANCE = 500.00;
 
-    public SavingsAccount(String accountNumber, double balance, String branch, Customer customer) {
+    public InvestmentAccount(String accountNumber, double balance, String branch, Customer customer) {
         super(accountNumber, balance, branch, customer);
-        this.accountType = AccountType.SAVINGS;
+        if (balance < MIN_OPENING_BALANCE) {
+            throw new IllegalArgumentException("Investment account requires minimum BWP 500.00 opening balance");
+        }
+        this.accountType = AccountType.INVESTMENT;
     }
 
     @Override
     public boolean canWithdraw() {
-        return false; // Savings account doesn't allow withdrawals
+        return true;
     }
 
     @Override
@@ -22,13 +26,13 @@ public class SavingsAccount extends Account {
     public void applyMonthlyInterest() {
         double interest = balance * MONTHLY_INTEREST_RATE;
         balance += interest;
-        System.out.println("Applied interest: " + interest + " to savings account: " + accountNumber);
+        System.out.println("Applied interest: " + interest + " to investment account: " + accountNumber);
     }
 
-    // Method overloading - demonstrating polymorphism
-    public void applyMonthlyInterest(double customRate) {
-        double interest = balance * customRate;
-        balance += interest;
-        System.out.println("Applied custom interest: " + interest + " to savings account: " + accountNumber);
+    // Method overloading
+    public void applyMonthlyInterest(int months) {
+        for (int i = 0; i < months; i++) {
+            applyMonthlyInterest();
+        }
     }
 }
