@@ -1,47 +1,34 @@
 package com.bankingapp.model;
-import com.bankingapp.enums.TransactionType;
 
 public class SavingsAccount extends Account {
-    private static final double INDIVIDUAL_INTEREST_RATE = 0.025;
-    private static final double COMPANY_INTEREST_RATE = 0.075;
+    private static final double MONTHLY_INTEREST_RATE = 0.0005; // 0.05%
 
-    public SavingsAccount(String accountNumber, double initialBalance, String branch) {
-        super(accountNumber, initialBalance, branch);
+    public SavingsAccount(String accountNumber, double balance, String branch, Customer customer) {
+        super(accountNumber, balance, branch, customer);
+        this.accountType = AccountType.SAVINGS;
     }
 
     @Override
-    public boolean withdraw(double amount) {
-        System.out.println("Withdrawals are not allowed from Savings Account: " + accountNumber);
-        return false;
+    public boolean canWithdraw() {
+        return false; // Savings account doesn't allow withdrawals
     }
 
     @Override
-    public void calculateInterest() {
-        if (customer == null) {
-            System.out.println("Cannot calculate interest - no customer associated with account");
-            return;
-        }
+    public boolean canDeposit() {
+        return true;
+    }
 
-        double interestRate = (customer.getCustomerType() == com.bankingapp.enums.CustomerType.INDIVIDUAL)
-            ? INDIVIDUAL_INTEREST_RATE : COMPANY_INTEREST_RATE;
+    @Override
+    public void applyMonthlyInterest() {
+        double interest = balance * MONTHLY_INTEREST_RATE;
+        balance += interest;
+        System.out.println("Applied interest: " + interest + " to savings account: " + accountNumber);
+    }
 
-        double interest = balance * interestRate;
-        deposit(interest);
-
-        Transaction interestTransaction = new Transaction(
-            generateTransactionId(),
-            interest,
-            TransactionType.INTEREST,
-            "Monthly interest",
-            balance
-        );
-
-        if (!transactions.isEmpty()) {
-            transactions.remove(transactions.size() - 1);
-        }
-        transactions.add(interestTransaction);
-
-        System.out.println("Interest calculated and added: $" + interest +
-                          " to Savings Account: " + accountNumber);
+    // Method overloading - demonstrating polymorphism
+    public void applyMonthlyInterest(double customRate) {
+        double interest = balance * customRate;
+        balance += interest;
+        System.out.println("Applied custom interest: " + interest + " to savings account: " + accountNumber);
     }
 }

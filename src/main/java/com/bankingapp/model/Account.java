@@ -1,68 +1,52 @@
 package com.bankingapp.model;
 
-import com.bankingapp.enums.AccountType;
 import java.time.LocalDateTime;
 
-public class Account {
-    private String accountId;
-    private String userId;
-    private String accountNumber;
-    private AccountType accountType;
-    private double balance;
-    private double interestRate;
-    private LocalDateTime openedDate;
-    private boolean active;
+public abstract class Account {
+    protected String accountNumber;
+    protected double balance;
+    protected String branch;
+    protected LocalDateTime dateOpened;
+    protected Customer customer;
+    protected AccountType accountType;
 
-    public Account(String accountId, String userId, String accountNumber,
-                   AccountType accountType, double initialBalance) {
-        this.accountId = accountId;
-        this.userId = userId;
+    public Account(String accountNumber, double balance, String branch, Customer customer) {
         this.accountNumber = accountNumber;
-        this.accountType = accountType;
-        this.balance = initialBalance;
-        this.interestRate = accountType.getInterestRate();
-        this.openedDate = LocalDateTime.now();
-        this.active = true;
+        this.balance = balance;
+        this.branch = branch;
+        this.customer = customer;
+        this.dateOpened = LocalDateTime.now();
     }
 
-    // Getters
-    public String getAccountId() { return accountId; }
-    public String getUserId() { return userId; }
-    public String getAccountNumber() { return accountNumber; }
-    public AccountType getAccountType() { return accountType; }
-    public double getBalance() { return balance; }
-    public double getInterestRate() { return interestRate; }
-    public LocalDateTime getOpenedDate() { return openedDate; }
-    public boolean isActive() { return active; }
-
-    // Business methods (no UI logic - pure business logic)
-    public boolean deposit(double amount) {
-        if (amount > 0) {
-            balance += amount;
-            return true;
+    // Abstract methods - demonstrating abstraction
+    public abstract boolean canWithdraw();
+    public abstract boolean canDeposit();
+    public abstract void applyMonthlyInterest();
+   
+    // Concrete methods - demonstrating inheritance
+    public void deposit(double amount) {
+        if (amount > 0 && canDeposit()) {
+            this.balance += amount;
+            System.out.println("Deposited: " + amount + " to account: " + accountNumber);
         }
-        return false;
     }
 
     public boolean withdraw(double amount) {
-        if (amount > 0 && amount <= balance) {
-            balance -= amount;
+        if (amount > 0 && canWithdraw() && balance >= amount) {
+            this.balance -= amount;
+            System.out.println("Withdrawn: " + amount + " from account: " + accountNumber);
             return true;
         }
         return false;
     }
 
-    public void applyInterest() {
-        balance += balance * interestRate;
-    }
+    // Getters and setters - demonstrating encapsulation
+    public String getAccountNumber() { return accountNumber; }
+    public double getBalance() { return balance; }
+    public String getBranch() { return branch; }
+    public LocalDateTime getDateOpened() { return dateOpened; }
+    public Customer getCustomer() { return customer; }
+    public AccountType getAccountType() { return accountType; }
 
-    public String getFormattedBalance() {
-        return String.format("$%.2f", balance);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Account{number=%s, type=%s, balance=%.2f}",
-            accountNumber, accountType, balance);
-    }
+    public void setBalance(double balance) { this.balance = balance; }
 }

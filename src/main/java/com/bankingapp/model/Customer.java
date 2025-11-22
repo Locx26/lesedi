@@ -1,76 +1,64 @@
 package com.bankingapp.model;
-import com.bankingapp.enums.CustomerType;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Customer extends User {
+public class Customer {
     private String customerId;
     private String firstName;
-    private String lastName;
+    private String surname;
     private String address;
     private String phoneNumber;
     private String email;
-    private CustomerType customerType;
     private List<Account> accounts;
 
-    public Customer(String customerId, String firstName, String lastName,
-                   String address, String phoneNumber, String email,
-                   CustomerType customerType, String userId, String password) {
-        super(userId, password);
+    public Customer(String customerId, String firstName, String surname, String address,
+                   String phoneNumber, String email) {
         this.customerId = customerId;
         this.firstName = firstName;
-        this.lastName = lastName;
+        this.surname = surname;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.customerType = customerType;
         this.accounts = new ArrayList<>();
     }
 
-    @Override
-    public boolean login(String username, String password) {
-        if (this.userId.equals(username) && verifyPassword(password, this.passwordHash)) {
-            System.out.println("Customer " + firstName + " logged in successfully");
-            return true;
+    // Demonstrating polymorphism through interface-like behavior
+    public void openAccount(Account account) {
+        accounts.add(account);
+        System.out.println("Opened " + account.getAccountType() + " account for customer: " + firstName + " " + surname);
+    }
+
+    public void depositToAccount(String accountNumber, double amount) {
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                account.deposit(amount);
+                return;
+            }
         }
-        System.out.println("Login failed for customer: " + username);
+        System.out.println("Account not found: " + accountNumber);
+    }
+
+    public boolean withdrawFromAccount(String accountNumber, double amount) {
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                return account.withdraw(amount);
+            }
+        }
         return false;
     }
 
-    @Override
-    public void logout() {
-        System.out.println("Customer " + firstName + " logged out");
-    }
-
-    public void addAccount(Account account) {
-        if (account != null) {
-            accounts.add(account);
-            account.setCustomer(this);
-            System.out.println("Account " + account.getAccountNumber() + " added to customer " + firstName);
-        }
-    }
-
-    public List<Account> getAccounts() {
-        return new ArrayList<>(accounts);
-    }
-
-    public Account findAccount(String accountNumber) {
-        for (Account account : accounts) {
-            if (account.getAccountNumber().equals(accountNumber)) {
-                return account;
-            }
-        }
-        return null;
-    }
-
+    // Getters and setters
     public String getCustomerId() { return customerId; }
     public String getFirstName() { return firstName; }
-    public String getLastName() { return lastName; }
+    public String getSurname() { return surname; }
     public String getAddress() { return address; }
     public String getPhoneNumber() { return phoneNumber; }
     public String getEmail() { return email; }
-    public CustomerType getCustomerType() { return customerType; }
+    public List<Account> getAccounts() { return accounts; }
 
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setSurname(String surname) { this.surname = surname; }
     public void setAddress(String address) { this.address = address; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
     public void setEmail(String email) { this.email = email; }

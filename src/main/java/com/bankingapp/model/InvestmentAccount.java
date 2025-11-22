@@ -1,49 +1,34 @@
 package com.bankingapp.model;
-import com.bankingapp.enums.TransactionType;
-import com.bankingapp.enums.AccountStatus;
 
-public class InvestmentAccount extends Account {
-    private static final double INTEREST_RATE = 0.05;
-    private static final double MIN_INITIAL_DEPOSIT = 500.0;
+public class SavingsAccount extends Account {
+    private static final double MONTHLY_INTEREST_RATE = 0.0005; // 0.05%
 
-    public InvestmentAccount(String accountNumber, double initialBalance, String branch) {
-        super(accountNumber, initialBalance, branch);
-
-        if (initialBalance < MIN_INITIAL_DEPOSIT) {
-            System.out.println("Warning: Investment account requires minimum initial deposit of $" +
-                             MIN_INITIAL_DEPOSIT);
-        }
+    public SavingsAccount(String accountNumber, double balance, String branch, Customer customer) {
+        super(accountNumber, balance, branch, customer);
+        this.accountType = AccountType.SAVINGS;
     }
 
     @Override
-    public boolean withdraw(double amount) {
-        if (amount > 0 && amount <= balance && status == AccountStatus.ACTIVE) {
-            balance -= amount;
-            Transaction transaction = new Transaction(
-                generateTransactionId(),
-                amount,
-                TransactionType.WITHDRAWAL,
-                "Withdrawal",
-                balance
-            );
-            transactions.add(transaction);
-            System.out.println("Withdrawn: $" + amount + " from Investment Account: " + accountNumber);
-            return true;
-        }
-        System.out.println("Withdrawal failed from Investment Account: " + accountNumber);
-        return false;
+    public boolean canWithdraw() {
+        return false; // Savings account doesn't allow withdrawals
     }
 
     @Override
-    public void calculateInterest() {
-        double interest = balance * INTEREST_RATE;
-        deposit(interest);
-
-        System.out.println("Interest calculated and added: $" + interest +
-                          " to Investment Account: " + accountNumber);
+    public boolean canDeposit() {
+        return true;
     }
 
-    public static double getMinInitialDeposit() {
-        return MIN_INITIAL_DEPOSIT;
+    @Override
+    public void applyMonthlyInterest() {
+        double interest = balance * MONTHLY_INTEREST_RATE;
+        balance += interest;
+        System.out.println("Applied interest: " + interest + " to savings account: " + accountNumber);
+    }
+
+    // Method overloading - demonstrating polymorphism
+    public void applyMonthlyInterest(double customRate) {
+        double interest = balance * customRate;
+        balance += interest;
+        System.out.println("Applied custom interest: " + interest + " to savings account: " + accountNumber);
     }
 }
