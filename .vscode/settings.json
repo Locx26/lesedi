@@ -2,7 +2,7 @@
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.compile.nullAnalysis.mode": "automatic",
     "maven.terminal.useJavaHome": true,
-    "java.jdt.ls.java.home": "/usr/lib/jvm/ms-openjdk-17",
+    "java.jdt.ls.java.home": "/home/codespace/java/current",
     "java.debug.settings.onBuildFailureProceed": true,
     "java.test.config": [
         {

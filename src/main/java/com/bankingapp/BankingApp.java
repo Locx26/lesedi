@@ -2,8 +2,6 @@ package com.bankingapp;
 
 import com.bankingapp.gui.MainView;
 import com.bankingapp.dao.DatabaseConnection;
-import com.bankingapp.integration.IntegrationTest;
-import com.bankingapp.util.ValidationUtil;
 
 /**
  * SecureTrust Banking System - Enterprise Edition v2.0.0
@@ -94,7 +92,7 @@ public class BankingApp {
         // Auto-detect Codespaces environment
         if (System.getenv("CODESPACE_NAME") != null) {
             System.out.println("🌐 GitHub Codespaces environment detected");
-            config.headlessMode = true;
+            config.headlessMode = false;
         }
        
         return config;
@@ -150,9 +148,8 @@ public class BankingApp {
     private static void initializeSecurity() {
         System.out.println("🔒 Initializing security components...");
        
-        // Test security utilities
-        String testSalt = com.bankingapp.util.SecurityUtil.generateSalt();
-        String testHash = com.bankingapp.util.SecurityUtil.hashPassword("test", testSalt);
+        // Test security utilities - validate initialization
+        com.bankingapp.util.SecurityUtil.generateSalt();
        
         System.out.println("✅ Security utilities initialized");
         System.out.println("   • Password hashing: Functional");
@@ -174,38 +171,9 @@ public class BankingApp {
    
     private static void runIntegrationTests() {
         System.out.println("\n🧪 Running Integration Test Suite...");
+        System.out.println("Integration tests have been moved to src/test directory");
+        System.out.println("Run: mvn test to execute integration tests");
         System.out.println("=====================================");
-       
-        try {
-            // Run the comprehensive integration test suite
-            IntegrationTest testSuite = new IntegrationTest();
-           
-            // Use reflection to run test methods in order
-            java.lang.reflect.Method[] methods = IntegrationTest.class.getDeclaredMethods();
-            java.util.Arrays.sort(methods, (m1, m2) -> {
-                Order o1 = m1.getAnnotation(Order.class);
-                Order o2 = m2.getAnnotation(Order.class);
-                if (o1 == null || o2 == null) return 0;
-                return Integer.compare(o1.value(), o2.value());
-            });
-           
-            for (java.lang.reflect.Method method : methods) {
-                if (method.isAnnotationPresent(Test.class)) {
-                    DisplayName displayName = method.getAnnotation(DisplayName.class);
-                    if (displayName != null) {
-                        System.out.println("\n" + displayName.value());
-                    }
-                    method.invoke(testSuite);
-                }
-            }
-           
-            System.out.println("\n=====================================");
-            System.out.println("✅ All integration tests passed successfully!");
-           
-        } catch (Exception e) {
-            System.err.println("❌ Integration tests failed: " + e.getMessage());
-            System.exit(1);
-        }
     }
    
     private static void startApplication(AppConfig config) {

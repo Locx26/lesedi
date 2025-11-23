@@ -6,8 +6,7 @@
             "name": "Launch Banking App",
             "request": "launch",
             "mainClass": "com.bankingapp.BankingApp",
-            "projectName": "securetrust-banking-system",
-            "vmArgs": "--module-path /opt/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics --add-opens javafx.graphics/javafx.scene=ALL-UNNAMED"
+            "projectName": "securetrust-banking-system"
         },
         {
             "type": "java",
