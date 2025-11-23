@@ -1,0 +1,33 @@
+# Maven build artifacts
+target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Process ID files
+*.pid
+
+# Jupyter notebooks
+.ipynb_checkpoints/
+
+# Database files
+*.db
+*.trace.db
+
+# MacOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
