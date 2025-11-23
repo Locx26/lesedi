@@ -1,0 +1,55 @@
+nohup: ignoring input
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                        SECURETRUST BANKING SYSTEM                           ║
+║                      Enterprise Edition v2.0.0                          ║
+║                                                                              ║
+║        BSC Computer Systems Engineering - OOAD Assignment 2025              ║
+║              Professional Banking Management Platform                        ║
+║                                                                              ║
+║  🔒 Secure | 💰 Reliable | 🚀 Modern | 🎯 Professional                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+📋 Assignment Requirements:
+  ✅ All three account types with specific business rules
+  ✅ 10 sample customer records in database
+  ✅ Complete OOAD principles demonstration
+  ✅ Professional JavaFX GUI with MVC architecture
+  ✅ GitHub Codespaces optimization
+  ✅ Comprehensive documentation and testing
+
+🔧 Initializing enterprise components...
+🔧 Initializing database schema...
+📊 Inserting sample data...
+✅ Sample data inserted: 10 customers, 17 accounts
+✅ Database initialized successfully
+✅ Database initialized successfully
+📊 Database Statistics:
+• Customers: 10
+• Accounts: 17
+• Total Assets: BWP 51,100.00
+• Average Balance: BWP 3,005.88
+
+🔒 Initializing security components...
+✅ Security utilities initialized
+   • Password hashing: Functional
+   • Input validation: Enabled
+   • SQL injection protection: Active
+📋 Loading business configuration...
+   • Savings Account: 0.05% monthly interest, no withdrawals
+   • Investment Account: 5% monthly interest, BWP 500 minimum
+   • Cheque Account: No interest, requires employer information
+   • Transaction limits: Standard banking limits applied
+✅ Business configuration loaded
+✅ All systems operational (432ms)
+
+🌐 Starting Enterprise Headless Mode...
+📊 Starting web services on port 8080...
+🔗 Web Server started on port 8080
+🌐 Access the application at: http://localhost:8080
+✅ Web services started successfully
+🔗 Access the application via: http://localhost:8080
+📚 API documentation available at: http://localhost:8080/api/health
+
+🚀 Banking System is now running in headless mode
+   Press Ctrl+C to stop the application
