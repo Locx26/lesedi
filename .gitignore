@@ -27,7 +27,7 @@ buildNumber.properties
 # Runtime files
 *.pid
 *.log
-gui.ready
+gui.ready  # GUI initialization readiness marker file
 server.log
 websockify.log
 x11vnc.log
