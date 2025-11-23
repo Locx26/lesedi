@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.bankingapp.integration.IntegrationTest" time="0.793" tests="15" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/workspaces/lesedi/target/test-classes:/workspaces/lesedi/target/classes:/home/codespace/.m2/repository/org/openjfx/javafx-controls/21.0.4/javafx-controls-21.0.4-linux.jar:/home/codespace/.m2/repository/org/openjfx/javafx-graphics/21.0.4/javafx-graphics-21.0.4.jar:/home/codespace/.m2/repository/org/openjfx/javafx-fxml/21.0.4/javafx-fxml-21.0.4-linux.jar:/home/codespace/.m2/repository/org/openjfx/javafx-controls/21.0.4/javafx-controls-21.0.4.jar:/home/codespace/.m2/repository/org/openjfx/javafx-base/21.0.4/javafx-base-21.0.4-linux.jar:/home/codespace/.m2/repository/org/openjfx/javafx-graphics/21.0.4/javafx-graphics-21.0.4-linux.jar:/home/codespace/.m2/repository/org/openjfx/javafx-base/21.0.4/javafx-base-21.0.4.jar:/home/codespace/.m2/repository/com/h2database/h2/2.3.230/h2-2.3.230.jar:/home/codespace/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.1/jackson-core-2.17.1.jar:/home/codespace/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.17.1/jackson-databind-2.17.1.jar:/home/codespace/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.1/jackson-annotations-2.17.1.jar:/home/codespace/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.1/junit-jupiter-api-5.10.1.jar:/home/codespace/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/codespace/.m2/repository/org/junit/platform/junit-platform-commons/1.10.1/junit-platform-commons-1.10.1.jar:/home/codespace/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/codespace/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.1/junit-jupiter-engine-5.10.1.jar:/home/codespace/.m2/repository/org/junit/platform/junit-platform-engine/1.10.1/junit-platform-engine-1.10.1.jar:/home/codespace/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.1/junit-jupiter-5.10.1.jar:/home/codespace/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.1/junit-jupiter-params-5.10.1.jar:"/>
+    <property name="java.vm.vendor" value="Microsoft"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://www.microsoft.com"/>
+    <property name="user.timezone" value="Etc/UTC"/>
+    <property name="os.name" value="Linux"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="/usr/local/sdkman/candidates/java/21.0.9-ms/lib"/>
+    <property name="sun.java.command" value="/workspaces/lesedi/target/surefire/surefirebooter-20251123110407546_3.jar /workspaces/lesedi/target/surefire 2025-11-23T11-04-06_864-jvmRun1 surefire-20251123110407546_1tmp surefire_0-20251123110407546_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/workspaces/lesedi/target/test-classes:/workspaces/lesedi/target/classes:/home/codespace/.m2/repository/org/openjfx/javafx-controls/21.0.4/javafx-controls-21.0.4-linux.jar:/home/codespace/.m2/repository/org/openjfx/javafx-graphics/21.0.4/javafx-graphics-21.0.4.jar:/home/codespace/.m2/repository/org/openjfx/javafx-fxml/21.0.4/javafx-fxml-21.0.4-linux.jar:/home/codespace/.m2/repository/org/openjfx/javafx-controls/21.0.4/javafx-controls-21.0.4.jar:/home/codespace/.m2/repository/org/openjfx/javafx-base/21.0.4/javafx-base-21.0.4-linux.jar:/home/codespace/.m2/repository/org/openjfx/javafx-graphics/21.0.4/javafx-graphics-21.0.4-linux.jar:/home/codespace/.m2/repository/org/openjfx/javafx-base/21.0.4/javafx-base-21.0.4.jar:/home/codespace/.m2/repository/com/h2database/h2/2.3.230/h2-2.3.230.jar:/home/codespace/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.17.1/jackson-core-2.17.1.jar:/home/codespace/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.17.1/jackson-databind-2.17.1.jar:/home/codespace/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.17.1/jackson-annotations-2.17.1.jar:/home/codespace/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.1/junit-jupiter-api-5.10.1.jar:/home/codespace/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/home/codespace/.m2/repository/org/junit/platform/junit-platform-commons/1.10.1/junit-platform-commons-1.10.1.jar:/home/codespace/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/codespace/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.1/junit-jupiter-engine-5.10.1.jar:/home/codespace/.m2/repository/org/junit/platform/junit-platform-engine/1.10.1/junit-platform-engine-1.10.1.jar:/home/codespace/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.1/junit-jupiter-5.10.1.jar:/home/codespace/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.1/junit-jupiter-params-5.10.1.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/home/codespace"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-10-21"/>
+    <property name="java.home" value="/usr/local/sdkman/candidates/java/21.0.9-ms"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/workspaces/lesedi"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="surefire.real.class.path" value="/workspaces/lesedi/target/surefire/surefirebooter-20251123110407546_3.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.9+10-LTS"/>
+    <property name="user.name" value="codespace"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="6.8.0-1030-azure"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Microsoft-12574458"/>
+    <property name="localRepository" value="/home/codespace/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/microsoft/openjdk/issues"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="21.0.9"/>
+    <property name="user.dir" value="/workspaces/lesedi"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Microsoft"/>
+    <property name="java.vm.version" value="21.0.9+10-LTS"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="65.0"/>
+  </properties>
+  <testcase name="testCustomerRegistration" classname="com.bankingapp.integration.IntegrationTest" time="0.04">
+    <system-out><![CDATA[🚀 Starting Integration Test Suite
+==================================
+🔧 Initializing database schema...
+📊 Inserting sample data...
+✅ Sample data inserted: 10 customers, 17 accounts
+✅ Database initialized successfully
+✅ Test environment initialized
+
+📝 Testing Customer Registration...
+✅ Customer registered: CUST1763895848726
+]]></system-out>
+  </testcase>
+  <testcase name="testCustomerRetrieval" classname="com.bankingapp.integration.IntegrationTest" time="0.016">
+    <system-out><![CDATA[
+🔍 Testing Customer Retrieval...
+✅ Customer retrieved successfully: Test User
+]]></system-out>
+  </testcase>
+  <testcase name="testSavingsAccountOpening" classname="com.bankingapp.integration.IntegrationTest" time="0.041">
+    <system-out><![CDATA[
+💰 Testing Savings Account Opening...
+Opened SAVINGS account for customer: Test User
+✅ Savings account opened: ACC1763895848784
+]]></system-out>
+  </testcase>
+  <testcase name="testInvestmentAccountOpening" classname="com.bankingapp.integration.IntegrationTest" time="0.016">
+    <system-out><![CDATA[
+📈 Testing Investment Account Opening...
+Opened SAVINGS account for customer: Test User
+Opened SAVINGS account for customer: Test User
+Opened INVESTMENT account for customer: Test User
+✅ Investment account opened: ACC1763895848832
+]]></system-out>
+  </testcase>
+  <testcase name="testChequeAccountOpening" classname="com.bankingapp.integration.IntegrationTest" time="0.014">
+    <system-out><![CDATA[
+💳 Testing Cheque Account Opening...
+Opened SAVINGS account for customer: Test User
+Opened INVESTMENT account for customer: Test User
+Opened CHEQUE account for customer: Test User
+✅ Cheque account opened: ACC1763895848845
+]]></system-out>
+  </testcase>
+  <testcase name="testDepositOperations" classname="com.bankingapp.integration.IntegrationTest" time="0.015">
+    <system-out><![CDATA[
+💵 Testing Deposit Operations...
+Deposited: 500.0 to account: ACC1763895848784
+✅ Deposit processed: BWP 500.00 to ACC1763895848784
+]]></system-out>
+  </testcase>
+  <testcase name="testWithdrawalOperations" classname="com.bankingapp.integration.IntegrationTest" time="0.008">
+    <system-out><![CDATA[
+💸 Testing Withdrawal Operations...
+Withdrawn: 200.0 from account: ACC1763895848832
+✅ Withdrawal processed: BWP 200.00 from ACC1763895848832
+]]></system-out>
+  </testcase>
+  <testcase name="testTransferOperations" classname="com.bankingapp.integration.IntegrationTest" time="0.03">
+    <system-out><![CDATA[
+🔄 Testing Transfer Operations...
+Withdrawn: 300.0 from account: ACC1763895848832
+Deposited: 300.0 to account: ACC1763895848784
+✅ Transfer processed: BWP 300.00 from ACC1763895848832 to ACC1763895848784
+]]></system-out>
+  </testcase>
+  <testcase name="testInterestCalculation" classname="com.bankingapp.integration.IntegrationTest" time="0.018">
+    <system-out><![CDATA[
+📊 Testing Interest Calculation...
+Applied interest: 0.9 to savings account: ACC1763895848784
+Applied interest: 25.0 to investment account: ACC1763895848832
+✅ Interest applied: Savings +0.05%, Investment +5%
+]]></system-out>
+  </testcase>
+  <testcase name="testAccountRestrictions" classname="com.bankingapp.integration.IntegrationTest" time="0.009">
+    <system-out><![CDATA[
+🚫 Testing Account Restrictions...
+✅ Account restrictions enforced correctly
+]]></system-out>
+  </testcase>
+  <testcase name="testSystemStatistics" classname="com.bankingapp.integration.IntegrationTest" time="0.055">
+    <system-out><![CDATA[
+📈 Testing System Statistics...
+Opened SAVINGS account for customer: Alice Brown
+Opened INVESTMENT account for customer: Alice Brown
+Opened SAVINGS account for customer: Bob Johnson
+Opened INVESTMENT account for customer: Bob Johnson
+Opened CHEQUE account for customer: Bob Johnson
+Opened CHEQUE account for customer: Charlie Wilson
+Opened SAVINGS account for customer: Diana Davis
+Opened INVESTMENT account for customer: Diana Davis
+Opened CHEQUE account for customer: Edward Miller
+Opened SAVINGS account for customer: Fiona Taylor
+Opened INVESTMENT account for customer: Fiona Taylor
+Opened CHEQUE account for customer: George Anderson
+Opened SAVINGS account for customer: Helen Thomas
+Opened INVESTMENT account for customer: Helen Thomas
+Opened CHEQUE account for customer: Jane Smith
+Opened SAVINGS account for customer: John Doe
+Opened INVESTMENT account for customer: John Doe
+Opened SAVINGS account for customer: Test User
+Opened INVESTMENT account for customer: Test User
+Opened CHEQUE account for customer: Test User
+✅ System statistics:
+   • Customers: 11
+   • Accounts: 20
+   • Total Assets: BWP 53,925.90
+]]></system-out>
+  </testcase>
+  <testcase name="testFinancialReporting" classname="com.bankingapp.integration.IntegrationTest" time="0.066">
+    <system-out><![CDATA[
+📋 Testing Financial Reporting...
+Opened SAVINGS account for customer: Alice Brown
+Opened INVESTMENT account for customer: Alice Brown
+Opened SAVINGS account for customer: Bob Johnson
+Opened INVESTMENT account for customer: Bob Johnson
+Opened CHEQUE account for customer: Bob Johnson
+Opened CHEQUE account for customer: Charlie Wilson
+Opened SAVINGS account for customer: Diana Davis
+Opened INVESTMENT account for customer: Diana Davis
+Opened CHEQUE account for customer: Edward Miller
+Opened SAVINGS account for customer: Fiona Taylor
+Opened INVESTMENT account for customer: Fiona Taylor
+Opened CHEQUE account for customer: George Anderson
+Opened SAVINGS account for customer: Helen Thomas
+Opened INVESTMENT account for customer: Helen Thomas
+Opened CHEQUE account for customer: Jane Smith
+Opened SAVINGS account for customer: John Doe
+Opened INVESTMENT account for customer: John Doe
+Opened SAVINGS account for customer: Test User
+Opened INVESTMENT account for customer: Test User
+Opened CHEQUE account for customer: Test User
+✅ Financial report generated successfully
+Report length: 764 characters
+]]></system-out>
+  </testcase>
+  <testcase name="testBulkOperations" classname="com.bankingapp.integration.IntegrationTest" time="0.025">
+    <system-out><![CDATA[
+⚡ Testing Bulk Operations...
+Applied interest: 0.9004500000000001 to savings account: ACC1763895848784
+Applied interest: 26.25 to investment account: ACC1763895848832
+No interest applied to cheque account: ACC1763895848845
+No interest applied to cheque account: CHQ001
+No interest applied to cheque account: CHQ002
+No interest applied to cheque account: CHQ003
+No interest applied to cheque account: CHQ004
+No interest applied to cheque account: CHQ005
+Applied interest: 250.0 to investment account: INV001
+Applied interest: 150.0 to investment account: INV002
+Applied interest: 375.0 to investment account: INV003
+Applied interest: 225.0 to investment account: INV004
+Applied interest: 300.0 to investment account: INV005
+Applied interest: 260.0 to investment account: INV006
+Applied interest: 0.75 to savings account: SAV001
+Applied interest: 0.4 to savings account: SAV002
+Applied interest: 1.1 to savings account: SAV003
+Applied interest: 0.6 to savings account: SAV004
+Applied interest: 0.47500000000000003 to savings account: SAV005
+Applied interest: 0.9 to savings account: SAV006
+✅ Bulk operations completed successfully
+]]></system-out>
+  </testcase>
+  <testcase name="testErrorHandling" classname="com.bankingapp.integration.IntegrationTest" time="0.003">
+    <system-out><![CDATA[
+🛡️ Testing Error Handling...
+✅ Error handling working correctly
+]]></system-out>
+  </testcase>
+  <testcase name="testCompleteWorkflow" classname="com.bankingapp.integration.IntegrationTest" time="0.039">
+    <system-out><![CDATA[
+🎯 Testing Complete Banking Workflow...
+Opened SAVINGS account for customer: Workflow Test
+Opened SAVINGS account for customer: Workflow Test
+Opened INVESTMENT account for customer: Workflow Test
+Deposited: 1000.0 to account: ACC1763895849099
+Withdrawn: 1000.0 from account: ACC1763895849106
+Withdrawn: 500.0 from account: ACC1763895849106
+Deposited: 500.0 to account: ACC1763895849099
+Applied interest: 1.75 to savings account: ACC1763895849099
+Opened SAVINGS account for customer: Alice Brown
+Opened INVESTMENT account for customer: Alice Brown
+Opened SAVINGS account for customer: Bob Johnson
+Opened INVESTMENT account for customer: Bob Johnson
+Opened CHEQUE account for customer: Bob Johnson
+Opened CHEQUE account for customer: Charlie Wilson
+Opened SAVINGS account for customer: Diana Davis
+Opened INVESTMENT account for customer: Diana Davis
+Opened CHEQUE account for customer: Edward Miller
+Opened SAVINGS account for customer: Fiona Taylor
+Opened INVESTMENT account for customer: Fiona Taylor
+Opened CHEQUE account for customer: George Anderson
+Opened SAVINGS account for customer: Helen Thomas
+Opened INVESTMENT account for customer: Helen Thomas
+Opened CHEQUE account for customer: Jane Smith
+Opened SAVINGS account for customer: John Doe
+Opened INVESTMENT account for customer: John Doe
+Opened SAVINGS account for customer: Test User
+Opened INVESTMENT account for customer: Test User
+Opened CHEQUE account for customer: Test User
+Opened SAVINGS account for customer: Workflow Test
+Opened INVESTMENT account for customer: Workflow Test
+✅ Complete banking workflow tested successfully
+   • Customer registered: CUST1763895849096
+   • Accounts opened: 2
+   • Transactions processed: 3
+   • Interest applied: Yes
+   • Report generated: Yes
+]]></system-out>
+  </testcase>
+</testsuite>
