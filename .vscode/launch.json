@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BankingApp",
+            "request": "launch",
+            "mainClass": "com.bankingapp.BankingApp",
+            "projectName": "lesedi"
+        },
+        {
+            "type": "java",
             "name": "Launch Banking App",
             "request": "launch",
             "mainClass": "com.bankingapp.BankingApp",
@@ -14,7 +21,9 @@
             "request": "launch",
             "mainClass": "com.bankingapp.BankingApp",
             "projectName": "securetrust-banking-system",
-            "args": ["--headless"]
+            "args": [
+                "--headless"
+            ]
         }
     ]
 }

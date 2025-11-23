@@ -92,7 +92,7 @@ public class BankingApp {
         // Auto-detect Codespaces environment
         if (System.getenv("CODESPACE_NAME") != null) {
             System.out.println("🌐 GitHub Codespaces environment detected");
-            config.headlessMode = false;
+            config.headlessMode = true;
         }
        
         return config;

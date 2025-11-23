@@ -40,10 +40,10 @@
    • Cheque Account: No interest, requires employer information
    • Transaction limits: Standard banking limits applied
 ✅ Business configuration loaded
-✅ All systems operational (490ms)
+✅ All systems operational (529ms)
 
 🎨 Launching Professional Graphical Interface...
-Nov 23, 2025 2:02:39 AM com.sun.javafx.application.PlatformImpl startup
+Nov 23, 2025 2:27:24 AM com.sun.javafx.application.PlatformImpl startup
 WARNING: Unsupported JavaFX configuration: classes were loaded from 'unnamed module @43c8b66f'
 Prism pipeline init order: sw 
 Using Double Precision Marlin Rasterizer
@@ -56,6 +56,16 @@ Opting in for HiDPI pixel scaling
 Prism pipeline name = com.sun.prism.sw.SWPipeline
 (X) Got class = class com.sun.prism.sw.SWPipeline
 Initialized prism pipeline: com.sun.prism.sw.SWPipeline
- vsync: true vpipe: false
-Nov 23, 2025 2:02:47 AM javafx.css.CssParser declaration
-WARNING: CSS Error parsing file:/workspaces/lesedi/target/classes/com/bankingapp/gui/styles.css: Expected '<color>' while parsing '-fx-background-color' at [268,42]
+❌ GUI initialization failed: Unable to open DISPLAY
+💡 Tip: Try running with --headless mode for web interface
+
+💥 CRITICAL SYSTEM ERROR:
+Message: Unable to open DISPLAY
+
+🔧 Troubleshooting Tips:
+1. Ensure Java 17 or higher is installed
+2. Check database connection settings
+3. Verify all required dependencies are available
+4. Try running with --headless mode
+
+📞 For support, contact system administrator.

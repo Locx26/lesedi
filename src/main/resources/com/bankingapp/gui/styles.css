@@ -25,7 +25,8 @@
 
 /* ===== MAIN CONTAINER STYLES ===== */
 .main-container {
-    -fx-background-color: linear-gradient(to bottom right, #667eea 0%, #764ba2 100%);
+    /* JavaFX linear-gradient uses 'from x% y% to x% y%' syntax */
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #667eea 0%, #764ba2 100%);
 }
 
 .dashboard-pane {
@@ -38,7 +39,7 @@
 
 /* ===== PROFESSIONAL HEADER ===== */
 .header {
-    -fx-background-color: linear-gradient(to right, -secondary-color, #34495e);
+    -fx-background-color: linear-gradient(from 0% 50% to 100% 50%, -secondary-color, #34495e);
     -fx-padding: 15 25;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 3);
 }
@@ -123,7 +124,7 @@
 
 /* ===== MODERN BUTTONS ===== */
 .btn-primary {
-    -fx-background-color: linear-gradient(to right, -primary-color, -primary-dark);
+    -fx-background-color: linear-gradient(from 0% 50% to 100% 50%, -primary-color, -primary-dark);
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 8;
@@ -134,7 +135,7 @@
 }
 
 .btn-primary:hover {
-    -fx-background-color: linear-gradient(to right, -primary-dark, #2573a7);
+    -fx-background-color: linear-gradient(from 0% 50% to 100% 50%, -primary-dark, #2573a7);
     -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.4), 10, 0, 0, 3);
 }
 
@@ -143,21 +144,21 @@
 }
 
 .btn-success {
-    -fx-background-color: linear-gradient(to right, -success-color, #219653);
+    -fx-background-color: linear-gradient(from 0% 50% to 100% 50%, -success-color, #219653);
     -fx-text-fill: white;
     -fx-background-radius: 8;
     -fx-border-radius: 8;
 }
 
 .btn-warning {
-    -fx-background-color: linear-gradient(to right, -warning-color, #e67e22);
+    -fx-background-color: linear-gradient(from 0% 50% to 100% 50%, -warning-color, #e67e22);
     -fx-text-fill: white;
     -fx-background-radius: 8;
     -fx-border-radius: 8;
 }
 
 .btn-danger {
-    -fx-background-color: linear-gradient(to right, -danger-color, #a23530);
+    -fx-background-color: linear-gradient(from 0% 50% to 100% 50%, -danger-color, #a23530);
     -fx-text-fill: white;
     -fx-background-radius: 8;
     -fx-border-radius: 8;
@@ -172,7 +173,7 @@
 }
 
 .table-view .column-header {
-    -fx-background-color: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #f8f9fa, #e9ecef);
     -fx-border-color: -border-color;
     -fx-text-fill: -text-dark;
     -fx-font-weight: bold;
@@ -265,7 +266,8 @@
 
 /* ===== DASHBOARD WIDGETS ===== */
 .stat-card {
-    -fx-background-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* 135deg approximated as top-left to bottom-right in JavaFX syntax */
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #667eea 0%, #764ba2 100%);
     -fx-background-radius: 12;
     -fx-padding: 20;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);
@@ -287,7 +289,7 @@
 
 /* ===== SIDEBAR NAVIGATION ===== */
 .sidebar {
-    -fx-background-color: linear-gradient(to bottom, -secondary-color, #34495e);
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, -secondary-color, #34495e);
     -fx-padding: 20 0;
 }
 
