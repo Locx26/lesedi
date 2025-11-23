@@ -1,0 +1,253 @@
+/* SecureTrust Banking System - Professional Styling */
+
+.root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-background-color: #f8f9fa;
+}
+
+/* ===== TYPOGRAPHY ===== */
+.header-primary {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.header-secondary {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.header-tertiary {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.body-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #5d6d7e;
+}
+
+/* ===== BUTTON STYLES ===== */
+.primary-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 8;
+    -fx-padding: 12 24;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #2980b9;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.4), 10, 0.5, 0, 2);
+}
+
+.primary-button:pressed {
+    -fx-background-color: #21618c;
+}
+
+.success-button {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 12 24;
+    -fx-cursor: hand;
+}
+
+.success-button:hover {
+    -fx-background-color: #219653;
+    -fx-effect: dropshadow(gaussian, rgba(39, 174, 96, 0.4), 10, 0.5, 0, 2);
+}
+
+.warning-button {
+    -fx-background-color: #e67e22;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 12 24;
+    -fx-cursor: hand;
+}
+
+.warning-button:hover {
+    -fx-background-color: #d35400;
+}
+
+.danger-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 12 24;
+    -fx-cursor: hand;
+}
+
+.danger-button:hover {
+    -fx-background-color: #c0392b;
+}
+
+.secondary-button {
+    -fx-background-color: #95a5a6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+
+/* ===== FORM CONTROLS ===== */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 12;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused {
+    -fx-border-color: #3498db;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.2), 10, 0.5, 0, 0);
+}
+
+.password-field {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 12;
+    -fx-font-size: 14px;
+}
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 8;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 8 12;
+}
+
+/* ===== LAYOUT STYLES ===== */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 2);
+    -fx-padding: 20;
+}
+
+.sidebar {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 20;
+}
+
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ecf0f1;
+    -fx-font-size: 14px;
+    -fx-padding: 15 20;
+    -fx-alignment: center-left;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #34495e;
+}
+
+.sidebar-button:selected {
+    -fx-background-color: #3498db;
+}
+
+/* ===== STATUS INDICATORS ===== */
+.success-message {
+    -fx-text-fill: #27ae60;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.error-message {
+    -fx-text-fill: #e74c3c;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.warning-message {
+    -fx-text-fill: #f39c12;
+    -fx-font-weight: bold;
+}
+
+.info-message {
+    -fx-text-fill: #3498db;
+    -fx-font-weight: bold;
+}
+
+/* ===== DATA DISPLAY ===== */
+.balance-display {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #27ae60;
+}
+
+.account-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #e8e8e8;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-padding: 15;
+    -fx-cursor: hand;
+}
+
+.account-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.5, 0, 3);
+}
+
+/* ===== TRANSACTION LIST ===== */
+.transaction-list {
+    -fx-background-color: transparent;
+}
+
+.transaction-item {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 12 15;
+    -fx-border-color: #f0f0f0;
+    -fx-border-width: 1;
+}
+
+.transaction-item:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+/* ===== SEPARATORS ===== */
+.separator {
+    -fx-background-color: #ecf0f1;
+}
+
+/* ===== SCROLL BARS ===== */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 2;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 2;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #95a5a6;
+}
