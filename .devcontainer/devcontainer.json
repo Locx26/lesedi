@@ -1,0 +1,9 @@
+{
+  "name": "lesedi (SecureTrust) Codespace",
+  "build": { "dockerfile": "Dockerfile" },
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [6080, 5900, 8080],
+  "postStartCommand": "chmod +x /workspace/run-codespaces.sh || true",
+  "remoteUser": "vscode",
+  "customizations": { "vscode": { "extensions": ["vscjava.vscode-java-pack", "redhat.java"] } }
+}
