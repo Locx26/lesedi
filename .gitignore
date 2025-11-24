@@ -1,0 +1,23 @@
+# JavaFX SDK and archives (do NOT commit SDK zips or extracted SDK folder)
+javafx-sdk/
+openjfx-*.zip
+openjfx-*.tar.gz
+openjfx-*
+*.zip
+*.tar.gz
+
+# Build / IDE
+/target/
+*.class
+
+# VS Code / IDE config
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
