@@ -16,41 +16,42 @@
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- Use a JavaFX BOM version that is available on Maven Central -->
+
+    <!-- Explicit JavaFX version (no BOM) -->
     <javafx.version>21.0.4</javafx.version>
+
+    <!-- Set platform classifier for JavaFX native artifacts when needed:
+         use 'linux', 'mac', or 'win' (windows classifier is 'win' or 'win-x64' depending on artifact).
+         If you prefer not to use classifiers here, remove the <classifier> lines and run with
+         the javafx-maven-plugin which can supply platform natives at runtime. -->
+    <javafx.platform>linux</javafx.platform>
+
     <jackson.version>2.17.1</jackson.version>
     <junit.version>5.10.1</junit.version>
     <h2.version>2.3.230</h2.version>
   </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-bom</artifactId>
-        <version>${javafx.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <dependencies>
-    <!-- JavaFX modules: explicit version included so IDE (m2e) won't see an empty version -->
+    <!-- JavaFX modules with explicit versions (BOM removed) -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
       <version>${javafx.version}</version>
+      <classifier>${javafx.platform}</classifier>
     </dependency>
+
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
       <version>${javafx.version}</version>
+      <classifier>${javafx.platform}</classifier>
     </dependency>
+
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-web</artifactId>
       <version>${javafx.version}</version>
+      <classifier>${javafx.platform}</classifier>
     </dependency>
 
     <!-- other dependencies -->
