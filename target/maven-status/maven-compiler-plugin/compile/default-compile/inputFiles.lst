@@ -9,11 +9,14 @@
 /workspaces/lesedi/src/main/java/com/bankingapp/gui/MainView.java
 /workspaces/lesedi/src/main/java/com/bankingapp/gui/ReportView.java
 /workspaces/lesedi/src/main/java/com/bankingapp/gui/TransactionView.java
+/workspaces/lesedi/src/main/java/com/bankingapp/gui/WebViewGUI.java
 /workspaces/lesedi/src/main/java/com/bankingapp/model/Account.java
 /workspaces/lesedi/src/main/java/com/bankingapp/model/AccountType.java
 /workspaces/lesedi/src/main/java/com/bankingapp/model/ChequeAccount.java
 /workspaces/lesedi/src/main/java/com/bankingapp/model/Customer.java
 /workspaces/lesedi/src/main/java/com/bankingapp/model/InvestmentAccount.java
 /workspaces/lesedi/src/main/java/com/bankingapp/model/SavingsAccount.java
+/workspaces/lesedi/src/main/java/com/bankingapp/model/Transaction.java
+/workspaces/lesedi/src/main/java/com/bankingapp/model/User.java
 /workspaces/lesedi/src/main/java/com/bankingapp/util/SecurityUtil.java
 /workspaces/lesedi/src/main/java/com/bankingapp/util/ValidationUtil.java

@@ -3,24 +3,34 @@
     "configurations": [
         {
             "type": "java",
-            "name": "SecureTrust Banking (GUI First — WORKING)",
+            "name": "🚀 Launch Banking App (Web Interface)",
             "request": "launch",
             "mainClass": "com.bankingapp.BankingApp",
             "projectName": "securetrust-banking-system",
-            "console": "integratedTerminal",
-            "vmArgs": "--module-path /workspaces/lesedi/javafx-sdk-21.0.5/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base",
+            "args": ["--headless"],
+            "console": "internalConsole",
             "env": {
                 "DISPLAY": ":99"
             }
         },
         {
             "type": "java",
-            "name": "Headless Mode (Web Only)",
+            "name": "🎨 Launch JavaFX GUI",
+            "request": "launch",
+            "mainClass": "com.bankingapp.gui.MainView",
+            "projectName": "securetrust-banking-system",
+            "vmArgs": "--module-path /opt/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml,javafx.graphics --add-opens javafx.graphics/javafx.scene=ALL-UNNAMED",
+            "env": {
+                "DISPLAY": ":99"
+            }
+        },
+        {
+            "type": "java",
+            "name": "🔧 Run Headless Tests",
             "request": "launch",
             "mainClass": "com.bankingapp.BankingApp",
             "projectName": "securetrust-banking-system",
-            "args": "--headless",
-            "console": "integratedTerminal"
+            "args": ["--headless"]
         }
     ]
 }

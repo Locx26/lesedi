@@ -4,6 +4,7 @@ import com.bankingapp.model.*;
 import com.bankingapp.dao.CustomerDAO;
 import com.bankingapp.dao.AccountDAO;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Professional Banking Controller
@@ -74,6 +75,18 @@ public class BankingController {
      */
     public List<Customer> getAllCustomers() {
         return customerDAO.getAllCustomers();
+    }
+
+    /**
+     * Get all accounts for display in GUI
+     */
+    public List<Account> getAllAccounts() {
+        try {
+            return accountDAO.getAllAccounts();
+        } catch (Exception e) {
+            System.err.println("Error retrieving accounts: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
     /**
@@ -524,6 +537,17 @@ public class BankingController {
     public String generateFinancialReport() {
         SystemStatistics stats = getSystemStatistics();
        
+        int totalAccounts = stats.getTotalAccounts();
+        int totalCustomers = stats.getTotalCustomers();
+        double totalAssets = stats.getTotalAssets();
+
+        // Avoid divide-by-zero when there are no accounts or customers
+        double savingsPct = totalAccounts > 0 ? (stats.getSavingsCount() * 100.0 / totalAccounts) : 0.0;
+        double investmentPct = totalAccounts > 0 ? (stats.getInvestmentCount() * 100.0 / totalAccounts) : 0.0;
+        double chequePct = totalAccounts > 0 ? (stats.getChequeCount() * 100.0 / totalAccounts) : 0.0;
+        double avgBalance = totalAccounts > 0 ? (totalAssets / totalAccounts) : 0.0;
+        double avgAccountsPerCustomer = totalCustomers > 0 ? ((double) totalAccounts / totalCustomers) : 0.0;
+
         return String.format("""
             ==================================================
                         SECURETRUST BANKING SYSTEM
@@ -555,15 +579,15 @@ public class BankingController {
             java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
             stats.getTotalCustomers(),
             stats.getTotalAccounts(),
-            stats.getTotalAssets(),
+            totalAssets,
             stats.getSavingsCount(),
-            (stats.getSavingsCount() * 100.0 / stats.getTotalAccounts()),
+            savingsPct,
             stats.getInvestmentCount(),
-            (stats.getInvestmentCount() * 100.0 / stats.getTotalAccounts()),
+            investmentPct,
             stats.getChequeCount(),
-            (stats.getChequeCount() * 100.0 / stats.getTotalAccounts()),
-            stats.getTotalAssets() / stats.getTotalAccounts(),
-            (double) stats.getTotalAccounts() / stats.getTotalCustomers()
+            chequePct,
+            avgBalance,
+            avgAccountsPerCustomer
         );
     }
 
