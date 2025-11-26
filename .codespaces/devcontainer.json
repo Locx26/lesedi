@@ -1,0 +1,12 @@
+{
+  "name": "SecureTrust Bank",
+  "image": "mcr.microsoft.com/devcontainers/java:1-17-bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": { "installMaven": true }
+  },
+  "forwardPorts": [8080],
+  "postCreateCommand": "mvn compile",
+  "portsAttributes": {
+    "8080": { "label": "Bank Dashboard", "onAutoForward": "openPreview" }
+  }
+}
