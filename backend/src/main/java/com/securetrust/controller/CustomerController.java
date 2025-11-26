@@ -6,6 +6,7 @@ import com.securetrust.model.CustomerType;
 import com.securetrust.repository.AccountRepository;
 import com.securetrust.repository.CustomerRepository;
 import com.securetrust.repository.TransactionRepository;
+import com.securetrust.service.PasswordService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +20,16 @@ public class CustomerController {
     private final CustomerRepository customerRepository;
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
+    private final PasswordService passwordService;
     
     public CustomerController(CustomerRepository customerRepository, 
                              AccountRepository accountRepository,
-                             TransactionRepository transactionRepository) {
+                             TransactionRepository transactionRepository,
+                             PasswordService passwordService) {
         this.customerRepository = customerRepository;
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
+        this.passwordService = passwordService;
     }
     
     @GetMapping
@@ -42,8 +46,15 @@ public class CustomerController {
             .mapToInt(c -> c.getAccounts() != null ? c.getAccounts().size() : 0)
             .sum();
         
+        // Calculate total balance
+        double totalBalance = customers.stream()
+            .flatMap(c -> c.getAccounts() != null ? c.getAccounts().stream() : java.util.stream.Stream.empty())
+            .mapToDouble(a -> a.getBalance() != null ? a.getBalance() : 0.0)
+            .sum();
+        
         model.addAttribute("customers", customers);
         model.addAttribute("totalAccounts", totalAccounts);
+        model.addAttribute("totalBalance", totalBalance);
         return "customers";
     }
     
@@ -75,6 +86,7 @@ public class CustomerController {
                              @RequestParam String email,
                              @RequestParam String customerType,
                              @RequestParam(required = false) String companyName,
+                             @RequestParam(required = false) String password,
                              HttpSession session,
                              RedirectAttributes redirectAttributes) {
         if (session.getAttribute("user") == null) {
@@ -100,6 +112,7 @@ public class CustomerController {
             customer.setAddress(address);
             customer.setPhoneNumber(phoneNumber);
             customer.setEmail(email);
+            customer.setPassword(passwordService.hashPassword(password));
             
             customerRepository.save(customer);
             redirectAttributes.addFlashAttribute("successMessage", "Customer added successfully!");
