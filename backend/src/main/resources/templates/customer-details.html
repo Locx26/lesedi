@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecureTrust Bank - Customer Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'st-primary': '#0066FF',
+            'st-secondary': '#00D4AA',
+            'st-dark': '#0A1628',
+            'st-accent': '#7C3AED',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sidebar-link.active { background: linear-gradient(90deg, rgba(0,102,255,0.1) 0%, transparent 100%); border-left: 3px solid #0066FF; }
+    .sidebar-link:hover { background: rgba(0,102,255,0.05); }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Top Header -->
+  <header class="bg-st-dark text-white fixed top-0 left-0 right-0 z-50 shadow-xl">
+    <div class="flex items-center justify-between h-16 px-6">
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-st-primary to-st-secondary rounded-xl flex items-center justify-center shadow-lg">
+            <i class="fas fa-shield-alt text-white text-sm"></i>
+          </div>
+          <div class="hidden md:block">
+            <h1 class="text-lg font-bold">SecureTrust</h1>
+            <p class="text-xs text-gray-400 -mt-1">Banking System</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <a href="/logout" class="ml-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-xl hover:bg-red-500/30 transition-colors flex items-center text-sm font-medium">
+          <i class="fas fa-sign-out-alt mr-2"></i>
+          <span class="hidden md:inline">Logout</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex pt-16">
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-gray-100 shadow-sm">
+      <nav class="p-4 space-y-2">
+        <a href="/dashboard" class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-th-large text-gray-500"></i>
+          </div>
+          <span>Dashboard</span>
+        </a>
+        
+        <a href="/customers" class="sidebar-link active flex items-center px-4 py-3 text-gray-700 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-users text-st-primary"></i>
+          </div>
+          <span class="font-medium">Customers</span>
+        </a>
+        
+        <a href="/transactions" class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-exchange-alt text-gray-500"></i>
+          </div>
+          <span>Transactions</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-64 flex-1 p-8">
+      <!-- Breadcrumb -->
+      <div class="flex items-center space-x-2 text-sm mb-6">
+        <a href="/customers" class="text-st-primary hover:underline">Customers</a>
+        <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+        <span class="text-gray-600" th:text="${customer.fullName}">Customer Name</span>
+      </div>
+
+      <!-- Success/Error Messages -->
+      <div th:if="${successMessage}" class="mb-6 p-5 bg-green-50 border border-green-200 rounded-2xl flex items-center">
+        <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+          <i class="fas fa-check text-green-600 text-2xl"></i>
+        </div>
+        <div>
+          <p class="font-bold text-green-800 text-lg">Success!</p>
+          <p class="text-green-600" th:text="${successMessage}"></p>
+        </div>
+      </div>
+      <div th:if="${errorMessage}" class="mb-6 p-5 bg-red-50 border border-red-200 rounded-2xl flex items-center">
+        <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mr-4">
+          <i class="fas fa-exclamation text-red-600 text-2xl"></i>
+        </div>
+        <div>
+          <p class="font-bold text-red-800 text-lg">Error</p>
+          <p class="text-red-600" th:text="${errorMessage}"></p>
+        </div>
+      </div>
+
+      <!-- Customer Profile Card -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 mb-8">
+        <div class="bg-gradient-to-r from-st-dark to-gray-800 rounded-t-2xl p-8">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-6">
+              <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-st-primary to-st-accent flex items-center justify-center text-white font-bold text-3xl shadow-xl">
+                <span th:text="${customer.firstName != null && customer.surname != null ? customer.firstName.substring(0,1) + customer.surname.substring(0,1) : '??'}">JD</span>
+              </div>
+              <div class="text-white">
+                <h1 class="text-3xl font-bold" th:text="${customer.fullName}">John Doe</h1>
+                <p class="text-gray-400 mt-1">Customer ID: <span class="font-mono" th:text="${customer.customerId}">CUST001</span></p>
+                <p class="text-gray-400 text-sm" th:text="${'Member since ' + #temporals.format(customer.createdAt, 'MMMM yyyy')}">Member since November 2025</p>
+              </div>
+            </div>
+            <div class="flex space-x-3">
+              <button onclick="document.getElementById('editModal').classList.remove('hidden')" 
+                      class="px-6 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-colors flex items-center">
+                <i class="fas fa-edit mr-2"></i>Edit Profile
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-8">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="flex items-center space-x-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <i class="fas fa-envelope text-st-primary"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Email Address</p>
+                <p class="font-semibold text-gray-900" th:text="${customer.email}">john@example.com</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                <i class="fas fa-phone text-green-600"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Phone Number</p>
+                <p class="font-semibold text-gray-900" th:text="${customer.phoneNumber ?: 'N/A'}">+267 71 234 567</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                <i class="fas fa-map-marker-alt text-purple-600"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Address</p>
+                <p class="font-semibold text-gray-900" th:text="${customer.address ?: 'N/A'}">123 Main Street</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accounts Section -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 mb-8">
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+          <div>
+            <h3 class="text-xl font-bold text-gray-900">Accounts</h3>
+            <p class="text-sm text-gray-500">Manage customer accounts</p>
+          </div>
+          <button onclick="document.getElementById('openAccountModal').classList.remove('hidden')"
+                  class="px-6 py-3 bg-st-primary text-white rounded-xl hover:bg-blue-700 transition-colors flex items-center shadow-lg shadow-blue-500/20">
+            <i class="fas fa-plus mr-2"></i>Open New Account
+          </button>
+        </div>
+        
+        <div class="p-6">
+          <div th:if="${#lists.isEmpty(customer.accounts)}" class="text-center py-12">
+            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fas fa-wallet text-4xl text-gray-300"></i>
+            </div>
+            <p class="text-gray-600 font-medium text-lg">No accounts yet</p>
+            <p class="text-sm text-gray-400 mb-4">Open an account to get started</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div th:each="acc : ${customer.accounts}" class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center"
+                     th:classappend="${acc.accountType.name() == 'SAVINGS'} ? 'bg-green-100' : (${acc.accountType.name() == 'INVESTMENT'} ? 'bg-purple-100' : 'bg-blue-100')">
+                  <i class="fas"
+                     th:classappend="${acc.accountType.name() == 'SAVINGS'} ? 'fa-piggy-bank text-green-600' : (${acc.accountType.name() == 'INVESTMENT'} ? 'fa-chart-line text-purple-600' : 'fa-money-check-alt text-blue-600')"></i>
+                </div>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold"
+                      th:classappend="${acc.accountType.name() == 'SAVINGS'} ? 'bg-green-100 text-green-700' : (${acc.accountType.name() == 'INVESTMENT'} ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700')"
+                      th:text="${acc.accountType.displayName}">Savings</span>
+              </div>
+              <p class="font-mono text-sm text-gray-500 mb-2" th:text="${acc.accountNumber}">SAV001</p>
+              <p class="text-2xl font-bold text-gray-900">BWP <span th:text="${#numbers.formatDecimal(acc.balance, 1, 2, 'COMMA')}">0.00</span></p>
+              <p class="text-xs text-gray-400 mt-2" th:text="${'Branch: ' + (acc.branch ?: 'Main Branch')}">Branch: Main Branch</p>
+              <div th:if="${acc.accountType.name() == 'CHEQUE'}" class="mt-2 text-xs text-gray-500">
+                <p><i class="fas fa-building mr-1"></i> <span th:text="${acc.employer}">Employer</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction History -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+        <div class="p-6 border-b border-gray-100">
+          <h3 class="text-xl font-bold text-gray-900">Transaction History</h3>
+          <p class="text-sm text-gray-500">Recent transactions across all accounts</p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Type</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Account</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase">Description</th>
+                <th class="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase">Amount</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr th:if="${#lists.isEmpty(transactions)}" class="text-center">
+                <td colspan="5" class="px-6 py-12">
+                  <p class="text-gray-500">No transactions yet</p>
+                </td>
+              </tr>
+              <tr th:each="txn : ${transactions}" class="hover:bg-gray-50 transition-colors">
+                <td class="px-6 py-4 text-sm text-gray-600" th:text="${#temporals.format(txn.transactionDate, 'dd MMM yyyy HH:mm')}">25 Nov 2025</td>
+                <td class="px-6 py-4">
+                  <span class="font-medium text-gray-900" th:text="${txn.type.displayName}">Deposit</span>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="font-mono text-sm text-gray-600" th:text="${txn.account.accountNumber}">SAV001</span>
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-600" th:text="${txn.description ?: 'N/A'}">Description</td>
+                <td class="px-6 py-4 text-right font-bold"
+                    th:classappend="${txn.type.name() == 'DEPOSIT' || txn.type.name() == 'TRANSFER_IN' || txn.type.name() == 'INTEREST'} ? 'text-green-600' : 'text-red-600'"
+                    th:text="${(txn.type.name() == 'DEPOSIT' || txn.type.name() == 'TRANSFER_IN' || txn.type.name() == 'INTEREST' ? '+' : '-') + 'BWP ' + #numbers.formatDecimal(txn.amount, 1, 2, 'COMMA')}">+BWP 1,000.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Edit Customer Modal -->
+  <div id="editModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4">
+      <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+        <h3 class="text-xl font-bold text-gray-900">Edit Customer</h3>
+        <button onclick="document.getElementById('editModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <form th:action="@{/customers/{id}/update(id=${customer.id})}" method="post" class="p-6 space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">First Name</label>
+            <input type="text" name="firstName" th:value="${customer.firstName}" required
+                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Surname</label>
+            <input type="text" name="surname" th:value="${customer.surname}" required
+                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary">
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+          <input type="email" name="email" th:value="${customer.email}" required
+                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
+          <input type="text" name="phoneNumber" th:value="${customer.phoneNumber}"
+                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Address</label>
+          <input type="text" name="address" th:value="${customer.address}"
+                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary">
+        </div>
+        <div class="flex space-x-3 pt-4">
+          <button type="button" onclick="document.getElementById('editModal').classList.add('hidden')"
+                  class="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-medium">Cancel</button>
+          <button type="submit"
+                  class="flex-1 py-3 bg-st-primary text-white rounded-xl hover:bg-blue-700 transition-colors font-medium">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Open Account Modal -->
+  <div id="openAccountModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4">
+      <div class="p-6 border-b border-gray-100 flex justify-between items-center">
+        <h3 class="text-xl font-bold text-gray-900">Open New Account</h3>
+        <button onclick="document.getElementById('openAccountModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <form th:action="@{/accounts/open}" method="post" class="p-6 space-y-4">
+        <input type="hidden" name="customerId" th:value="${customer.id}">
+        
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Account Type</label>
+          <select name="accountType" id="accountTypeSelect" required onchange="toggleEmployerFields()"
+                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary">
+            <option value="">Select account type...</option>
+            <option th:each="type : ${accountTypes}" th:value="${type.name()}" th:text="${type.displayName}">Account Type</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Initial Deposit (BWP)</label>
+          <input type="number" name="initialDeposit" step="0.01" min="0"
+                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary"
+                 placeholder="0.00">
+          <p class="text-xs text-gray-400 mt-1">Investment accounts require minimum BWP 500.00</p>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">Branch</label>
+          <input type="text" name="branch" value="Main Branch"
+                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary">
+        </div>
+        
+        <!-- Employer fields for Cheque account -->
+        <div id="employerFields" class="hidden space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Employer Name <span class="text-red-500">*</span></label>
+            <input type="text" name="employer" id="employerInput"
+                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary"
+                   placeholder="Company name">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Employer Address <span class="text-red-500">*</span></label>
+            <input type="text" name="employerAddress" id="employerAddressInput"
+                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary"
+                   placeholder="Company address">
+          </div>
+        </div>
+        
+        <div class="flex space-x-3 pt-4">
+          <button type="button" onclick="document.getElementById('openAccountModal').classList.add('hidden')"
+                  class="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-colors font-medium">Cancel</button>
+          <button type="submit"
+                  class="flex-1 py-3 bg-st-primary text-white rounded-xl hover:bg-blue-700 transition-colors font-medium">Open Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function toggleEmployerFields() {
+      const accountType = document.getElementById('accountTypeSelect').value;
+      const employerFields = document.getElementById('employerFields');
+      const employerInput = document.getElementById('employerInput');
+      const employerAddressInput = document.getElementById('employerAddressInput');
+      
+      if (accountType === 'CHEQUE') {
+        employerFields.classList.remove('hidden');
+        employerInput.required = true;
+        employerAddressInput.required = true;
+      } else {
+        employerFields.classList.add('hidden');
+        employerInput.required = false;
+        employerAddressInput.required = false;
+      }
+    }
+  </script>
+</body>
+</html>

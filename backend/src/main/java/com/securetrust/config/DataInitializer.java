@@ -3,6 +3,7 @@ package com.securetrust.config;
 import com.securetrust.model.Account;
 import com.securetrust.model.AccountType;
 import com.securetrust.model.Customer;
+import com.securetrust.model.CustomerType;
 import com.securetrust.repository.AccountRepository;
 import com.securetrust.repository.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -20,9 +21,10 @@ public class DataInitializer {
                 return;
             }
 
-            // Create customers
+            // Create individual customers
             Customer john = new Customer();
             john.setCustomerId("CUST001");
+            john.setCustomerType(CustomerType.INDIVIDUAL);
             john.setFirstName("John");
             john.setSurname("Doe");
             john.setAddress("123 Main Street, Gaborone");
@@ -32,6 +34,7 @@ public class DataInitializer {
 
             Customer jane = new Customer();
             jane.setCustomerId("CUST002");
+            jane.setCustomerType(CustomerType.INDIVIDUAL);
             jane.setFirstName("Jane");
             jane.setSurname("Smith");
             jane.setAddress("456 Broad Street, Francistown");
@@ -41,12 +44,23 @@ public class DataInitializer {
             
             Customer bob = new Customer();
             bob.setCustomerId("CUST003");
+            bob.setCustomerType(CustomerType.INDIVIDUAL);
             bob.setFirstName("Bob");
             bob.setSurname("Johnson");
             bob.setAddress("789 Market Road, Maun");
             bob.setPhoneNumber("73123456");
             bob.setEmail("bob.johnson@securetrust.com");
             customerRepo.save(bob);
+            
+            // Create company customer
+            Customer techCorp = new Customer();
+            techCorp.setCustomerId("CUST004");
+            techCorp.setCustomerType(CustomerType.COMPANY);
+            techCorp.setCompanyName("TechCorp Botswana Ltd");
+            techCorp.setAddress("Plot 123, CBD, Gaborone");
+            techCorp.setPhoneNumber("3901234");
+            techCorp.setEmail("finance@techcorp.co.bw");
+            customerRepo.save(techCorp);
 
             // Create accounts
             Account account1 = new Account();
@@ -82,9 +96,19 @@ public class DataInitializer {
             account4.setBalance(5000.00);
             account4.setBranch("North Branch");
             accountRepo.save(account4);
+            
+            // Company savings account (7.5% interest)
+            Account account5 = new Account();
+            account5.setCustomer(techCorp);
+            account5.setAccountType(AccountType.SAVINGS);
+            account5.setAccountNumber("SAV003");
+            account5.setBalance(50000.00);
+            account5.setBranch("Main Branch");
+            accountRepo.save(account5);
 
             System.out.println("Initial data loaded successfully!");
             System.out.println("Created " + customerRepo.count() + " customers and " + accountRepo.count() + " accounts");
+            System.out.println("Interest rates: Savings (Individual: 2.5%, Company: 7.5%), Investment: 5%, Cheque: 0%");
         };
     }
 }

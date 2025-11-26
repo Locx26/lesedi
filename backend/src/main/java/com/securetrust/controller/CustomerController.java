@@ -1,8 +1,11 @@
 package com.securetrust.controller;
 
+import com.securetrust.model.AccountType;
 import com.securetrust.model.Customer;
+import com.securetrust.model.CustomerType;
 import com.securetrust.repository.AccountRepository;
 import com.securetrust.repository.CustomerRepository;
+import com.securetrust.repository.TransactionRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +18,14 @@ public class CustomerController {
     
     private final CustomerRepository customerRepository;
     private final AccountRepository accountRepository;
+    private final TransactionRepository transactionRepository;
     
-    public CustomerController(CustomerRepository customerRepository, AccountRepository accountRepository) {
+    public CustomerController(CustomerRepository customerRepository, 
+                             AccountRepository accountRepository,
+                             TransactionRepository transactionRepository) {
         this.customerRepository = customerRepository;
         this.accountRepository = accountRepository;
+        this.transactionRepository = transactionRepository;
     }
     
     @GetMapping
@@ -50,12 +57,24 @@ public class CustomerController {
             .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
         customer.setAccounts(accountRepository.findByCustomerId(id));
         
+        // Get transactions for customer's accounts
+        var transactions = transactionRepository.findByCustomerId(id);
+        
         model.addAttribute("customer", customer);
+        model.addAttribute("transactions", transactions);
+        model.addAttribute("accountTypes", AccountType.values());
+        model.addAttribute("customerTypes", CustomerType.values());
         return "customer-details";
     }
     
     @PostMapping("/add")
-    public String addCustomer(@ModelAttribute Customer customer,
+    public String addCustomer(@RequestParam(required = false) String firstName,
+                             @RequestParam(required = false) String surname,
+                             @RequestParam(required = false) String address,
+                             @RequestParam(required = false) String phoneNumber,
+                             @RequestParam String email,
+                             @RequestParam String customerType,
+                             @RequestParam(required = false) String companyName,
                              HttpSession session,
                              RedirectAttributes redirectAttributes) {
         if (session.getAttribute("user") == null) {
@@ -63,6 +82,23 @@ public class CustomerController {
         }
         
         try {
+            Customer customer = new Customer();
+            customer.setCustomerId("CUST" + String.format("%03d", customerRepository.count() + 1));
+            customer.setCustomerType(CustomerType.valueOf(customerType));
+            
+            if (customer.getCustomerType() == CustomerType.COMPANY) {
+                if (companyName == null || companyName.trim().isEmpty()) {
+                    throw new IllegalArgumentException("Company name is required for company customers");
+                }
+                customer.setCompanyName(companyName);
+            }
+            
+            customer.setFirstName(firstName);
+            customer.setSurname(surname);
+            customer.setAddress(address);
+            customer.setPhoneNumber(phoneNumber);
+            customer.setEmail(email);
+            
             customerRepository.save(customer);
             redirectAttributes.addFlashAttribute("successMessage", "Customer added successfully!");
         } catch (Exception e) {
@@ -74,7 +110,11 @@ public class CustomerController {
     
     @PostMapping("/{id}/update")
     public String updateCustomer(@PathVariable Long id,
-                                 @ModelAttribute Customer customer,
+                                 @RequestParam String firstName,
+                                 @RequestParam String surname,
+                                 @RequestParam(required = false) String address,
+                                 @RequestParam(required = false) String phoneNumber,
+                                 @RequestParam String email,
                                  HttpSession session,
                                  RedirectAttributes redirectAttributes) {
         if (session.getAttribute("user") == null) {
@@ -85,11 +125,11 @@ public class CustomerController {
             var existingCustomer = customerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
             
-            existingCustomer.setFirstName(customer.getFirstName());
-            existingCustomer.setSurname(customer.getSurname());
-            existingCustomer.setAddress(customer.getAddress());
-            existingCustomer.setPhoneNumber(customer.getPhoneNumber());
-            existingCustomer.setEmail(customer.getEmail());
+            existingCustomer.setFirstName(firstName);
+            existingCustomer.setSurname(surname);
+            existingCustomer.setAddress(address);
+            existingCustomer.setPhoneNumber(phoneNumber);
+            existingCustomer.setEmail(email);
             
             customerRepository.save(existingCustomer);
             redirectAttributes.addFlashAttribute("successMessage", "Customer updated successfully!");
@@ -98,5 +138,34 @@ public class CustomerController {
         }
         
         return "redirect:/customers/" + id;
+    }
+    
+    @PostMapping("/{id}/delete")
+    public String deleteCustomer(@PathVariable Long id,
+                                HttpSession session,
+                                RedirectAttributes redirectAttributes) {
+        if (session.getAttribute("user") == null) {
+            return "redirect:/login";
+        }
+        
+        try {
+            var customer = customerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found"));
+            
+            // Check if customer has accounts with balance
+            var accounts = accountRepository.findByCustomerId(id);
+            double totalBalance = accounts.stream().mapToDouble(a -> a.getBalance()).sum();
+            
+            if (totalBalance > 0) {
+                throw new IllegalArgumentException("Cannot delete customer with account balance. Please close all accounts first.");
+            }
+            
+            customerRepository.delete(customer);
+            redirectAttributes.addFlashAttribute("successMessage", "Customer deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+        
+        return "redirect:/customers";
     }
 }

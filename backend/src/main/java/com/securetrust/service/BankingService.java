@@ -51,6 +51,11 @@ public class BankingService {
         Account account = accountRepository.findByAccountNumber(accountNumber)
             .orElseThrow(() -> new IllegalArgumentException("Account not found"));
         
+        // Savings accounts do not allow withdrawals per assignment requirements
+        if (account.getAccountType() == com.securetrust.model.AccountType.SAVINGS) {
+            throw new IllegalArgumentException("Withdrawals are not allowed from Savings accounts");
+        }
+        
         if (account.getBalance() < amount) {
             throw new IllegalArgumentException("Insufficient funds");
         }
@@ -122,5 +127,78 @@ public class BankingService {
         Account account = accountRepository.findByAccountNumber(accountNumber)
             .orElseThrow(() -> new IllegalArgumentException("Account not found"));
         return account.getBalance();
+    }
+    
+    /**
+     * Pay monthly interest to an account based on its type and customer type.
+     * Investment accounts: 5% monthly interest
+     * Savings accounts: 
+     *   - Individual customers: 2.5% monthly interest
+     *   - Company customers: 7.5% monthly interest
+     * Cheque accounts: 0% (no interest)
+     */
+    @Transactional
+    public Transaction payInterest(String accountNumber) {
+        Account account = accountRepository.findByAccountNumber(accountNumber)
+            .orElseThrow(() -> new IllegalArgumentException("Account not found"));
+        
+        double interestRate;
+        String rateDescription;
+        
+        switch (account.getAccountType()) {
+            case INVESTMENT:
+                interestRate = 0.05; // 5% monthly
+                rateDescription = "5%";
+                break;
+            case SAVINGS:
+                // Check if customer is company or individual
+                if (account.getCustomer().isCompany()) {
+                    interestRate = 0.075; // 7.5% monthly for companies
+                    rateDescription = "7.5% (Company)";
+                } else {
+                    interestRate = 0.025; // 2.5% monthly for individuals
+                    rateDescription = "2.5% (Individual)";
+                }
+                break;
+            case CHEQUE:
+            default:
+                interestRate = 0.0; // No interest for cheque accounts
+                rateDescription = "0%";
+                break;
+        }
+        
+        if (interestRate == 0 || account.getBalance() <= 0) {
+            return null; // No interest to pay
+        }
+        
+        double interestAmount = account.getBalance() * interestRate;
+        account.setBalance(account.getBalance() + interestAmount);
+        accountRepository.save(account);
+        
+        Transaction transaction = new Transaction();
+        transaction.setAccount(account);
+        transaction.setType(TransactionType.INTEREST);
+        transaction.setAmount(interestAmount);
+        transaction.setDescription("Monthly interest payment (" + rateDescription + ")");
+        transaction.setCategory("Interest");
+        transaction.setBalanceAfter(account.getBalance());
+        
+        return transactionRepository.save(transaction);
+    }
+    
+    /**
+     * Pay interest to all eligible accounts in the system.
+     */
+    @Transactional
+    public int payInterestToAllAccounts() {
+        var accounts = accountRepository.findAll();
+        int count = 0;
+        for (Account account : accounts) {
+            Transaction txn = payInterest(account.getAccountNumber());
+            if (txn != null) {
+                count++;
+            }
+        }
+        return count;
     }
 }

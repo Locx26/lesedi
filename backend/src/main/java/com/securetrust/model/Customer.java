@@ -26,6 +26,13 @@ public class Customer {
     
     private String email;
     
+    @Enumerated(EnumType.STRING)
+    @Column(name = "customer_type")
+    private CustomerType customerType = CustomerType.INDIVIDUAL;
+    
+    @Column(name = "company_name")
+    private String companyName;
+    
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -54,6 +61,12 @@ public class Customer {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
     
+    public CustomerType getCustomerType() { return customerType; }
+    public void setCustomerType(CustomerType customerType) { this.customerType = customerType; }
+    
+    public String getCompanyName() { return companyName; }
+    public void setCompanyName(String companyName) { this.companyName = companyName; }
+    
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     
@@ -62,6 +75,9 @@ public class Customer {
     
     // Helper method for full name
     public String getFullName() {
+        if (customerType == CustomerType.COMPANY && companyName != null && !companyName.isEmpty()) {
+            return companyName;
+        }
         if (firstName != null && surname != null) {
             return firstName + " " + surname;
         } else if (firstName != null) {
@@ -70,5 +86,10 @@ public class Customer {
             return surname;
         }
         return "Unknown";
+    }
+    
+    // Check if customer is a company
+    public boolean isCompany() {
+        return customerType == CustomerType.COMPANY;
     }
 }
