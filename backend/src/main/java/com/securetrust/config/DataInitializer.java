@@ -6,6 +6,7 @@ import com.securetrust.model.Customer;
 import com.securetrust.model.CustomerType;
 import com.securetrust.repository.AccountRepository;
 import com.securetrust.repository.CustomerRepository;
+import com.securetrust.service.PasswordService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class DataInitializer {
 
     @Bean
-    CommandLineRunner initDatabase(CustomerRepository customerRepo, AccountRepository accountRepo) {
+    CommandLineRunner initDatabase(CustomerRepository customerRepo, AccountRepository accountRepo, PasswordService passwordService) {
         return args -> {
             // Check if data already exists
             if (customerRepo.count() > 0) {
@@ -30,7 +31,7 @@ public class DataInitializer {
             john.setAddress("123 Main Street, Gaborone");
             john.setPhoneNumber("71123456");
             john.setEmail("john.doe@securetrust.com");
-            john.setPassword("password123");
+            john.setPassword(passwordService.hashPassword("password123"));
             customerRepo.save(john);
 
             Customer jane = new Customer();
@@ -41,7 +42,7 @@ public class DataInitializer {
             jane.setAddress("456 Broad Street, Francistown");
             jane.setPhoneNumber("72123456");
             jane.setEmail("jane.smith@securetrust.com");
-            jane.setPassword("password123");
+            jane.setPassword(passwordService.hashPassword("password123"));
             customerRepo.save(jane);
             
             Customer bob = new Customer();
@@ -52,7 +53,7 @@ public class DataInitializer {
             bob.setAddress("789 Market Road, Maun");
             bob.setPhoneNumber("73123456");
             bob.setEmail("bob.johnson@securetrust.com");
-            bob.setPassword("password123");
+            bob.setPassword(passwordService.hashPassword("password123"));
             customerRepo.save(bob);
             
             // Create company customer
@@ -63,7 +64,7 @@ public class DataInitializer {
             techCorp.setAddress("Plot 123, CBD, Gaborone");
             techCorp.setPhoneNumber("3901234");
             techCorp.setEmail("finance@techcorp.co.bw");
-            techCorp.setPassword("password123");
+            techCorp.setPassword(passwordService.hashPassword("password123"));
             customerRepo.save(techCorp);
 
             // Create accounts

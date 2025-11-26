@@ -9,9 +9,11 @@ import java.util.Optional;
 @Service
 public class AuthService {
     private final CustomerRepository customerRepository;
+    private final PasswordService passwordService;
     
-    public AuthService(CustomerRepository customerRepository) {
+    public AuthService(CustomerRepository customerRepository, PasswordService passwordService) {
         this.customerRepository = customerRepository;
+        this.passwordService = passwordService;
     }
     
     public boolean login(String email, String password) {
@@ -24,8 +26,10 @@ public class AuthService {
     
     public Optional<Customer> loginAsCustomer(String email, String password) {
         Optional<Customer> customer = customerRepository.findByEmail(email);
-        if (customer.isPresent() && password != null && password.equals(customer.get().getPassword())) {
-            return customer;
+        if (customer.isPresent() && customer.get().getPassword() != null) {
+            if (passwordService.verifyPassword(password, customer.get().getPassword())) {
+                return customer;
+            }
         }
         return Optional.empty();
     }

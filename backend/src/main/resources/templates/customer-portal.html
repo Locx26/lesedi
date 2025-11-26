@@ -55,7 +55,7 @@
         <div class="h-8 w-px bg-gray-700 mx-2"></div>
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 bg-gradient-to-br from-st-primary to-st-accent rounded-xl flex items-center justify-center">
-            <span class="text-white font-bold text-sm" th:text="${customer.firstName != null && customer.surname != null ? customer.firstName.substring(0,1) + customer.surname.substring(0,1) : 'CU'}">CU</span>
+            <span class="text-white font-bold text-sm" th:text="${customer.firstName != null && !customer.firstName.isEmpty() && customer.surname != null && !customer.surname.isEmpty() ? customer.firstName.substring(0,1) + customer.surname.substring(0,1) : 'CU'}">CU</span>
           </div>
           <div class="hidden md:block">
             <p class="text-sm font-medium" th:text="${customer.fullName}">Customer Name</p>

@@ -6,6 +6,7 @@ import com.securetrust.model.CustomerType;
 import com.securetrust.repository.AccountRepository;
 import com.securetrust.repository.CustomerRepository;
 import com.securetrust.repository.TransactionRepository;
+import com.securetrust.service.PasswordService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +20,16 @@ public class CustomerController {
     private final CustomerRepository customerRepository;
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
+    private final PasswordService passwordService;
     
     public CustomerController(CustomerRepository customerRepository, 
                              AccountRepository accountRepository,
-                             TransactionRepository transactionRepository) {
+                             TransactionRepository transactionRepository,
+                             PasswordService passwordService) {
         this.customerRepository = customerRepository;
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
+        this.passwordService = passwordService;
     }
     
     @GetMapping
@@ -108,7 +112,7 @@ public class CustomerController {
             customer.setAddress(address);
             customer.setPhoneNumber(phoneNumber);
             customer.setEmail(email);
-            customer.setPassword(password);
+            customer.setPassword(passwordService.hashPassword(password));
             
             customerRepository.save(customer);
             redirectAttributes.addFlashAttribute("successMessage", "Customer added successfully!");
