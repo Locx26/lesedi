@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecureTrust Bank - Notifications</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'st-primary': '#0066FF',
+            'st-secondary': '#00D4AA',
+            'st-dark': '#0A1628',
+            'st-accent': '#7C3AED',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sidebar-link.active { background: linear-gradient(90deg, rgba(0,102,255,0.1) 0%, transparent 100%); border-left: 3px solid #0066FF; }
+    .sidebar-link:hover { background: rgba(0,102,255,0.05); }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Top Header -->
+  <header class="bg-st-dark text-white fixed top-0 left-0 right-0 z-50 shadow-xl">
+    <div class="flex items-center justify-between h-16 px-6">
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-st-primary to-st-secondary rounded-xl flex items-center justify-center shadow-lg">
+            <i class="fas fa-shield-alt text-white text-sm"></i>
+          </div>
+          <div class="hidden md:block">
+            <h1 class="text-lg font-bold">SecureTrust</h1>
+            <p class="text-xs text-gray-400 -mt-1">Banking System</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <a href="/notifications" class="p-2.5 bg-st-primary/30 rounded-xl hover:bg-white/20 transition-colors relative">
+          <i class="fas fa-bell text-white"></i>
+          <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">0</span>
+        </a>
+        <a href="/settings" class="p-2.5 bg-white/10 rounded-xl hover:bg-white/20 transition-colors">
+          <i class="fas fa-cog text-gray-300"></i>
+        </a>
+        <div class="h-8 w-px bg-gray-700 mx-2"></div>
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-st-primary to-st-accent rounded-xl flex items-center justify-center">
+            <span class="text-white font-bold text-sm" th:text="${session.isAdmin != null && session.isAdmin ? 'AD' : 'CU'}">AD</span>
+          </div>
+          <div class="hidden md:block">
+            <p class="text-sm font-medium" th:text="${session.user}">user@securetrust.com</p>
+            <p class="text-xs text-gray-400" th:text="${session.isAdmin != null && session.isAdmin ? 'Administrator' : 'Customer'}">User</p>
+          </div>
+        </div>
+        <a href="/logout" class="ml-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-xl hover:bg-red-500/30 transition-colors flex items-center text-sm font-medium">
+          <i class="fas fa-sign-out-alt mr-2"></i>
+          <span class="hidden md:inline">Logout</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex pt-16">
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-gray-100 shadow-sm">
+      <nav class="p-4 space-y-2">
+        <a th:href="${session.isAdmin != null && session.isAdmin ? '/dashboard' : '/customer-portal'}" class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-th-large text-gray-500"></i>
+          </div>
+          <span>Dashboard</span>
+        </a>
+        
+        <a th:if="${session.isAdmin != null && session.isAdmin}" href="/customers" class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-users text-gray-500"></i>
+          </div>
+          <span>Customers</span>
+        </a>
+        
+        <a th:if="${session.isAdmin != null && session.isAdmin}" href="/transactions" class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-exchange-alt text-gray-500"></i>
+          </div>
+          <span>Transactions</span>
+        </a>
+
+        <div class="pt-6 pb-2">
+          <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Settings</p>
+        </div>
+        
+        <a href="/notifications" class="sidebar-link active flex items-center px-4 py-3 text-gray-700 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-bell text-st-primary"></i>
+          </div>
+          <span class="font-medium">Notifications</span>
+        </a>
+        
+        <a href="/settings" class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-cog text-gray-500"></i>
+          </div>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-64 flex-1 p-8">
+      <!-- Page Header -->
+      <div class="flex justify-between items-center mb-8">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">Notifications</h1>
+          <p class="text-gray-500 mt-1">Stay updated with your banking activities</p>
+        </div>
+        <button class="px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-colors flex items-center">
+          <i class="fas fa-check-double mr-2"></i>Mark All Read
+        </button>
+      </div>
+
+      <!-- Notification Filters -->
+      <div class="flex space-x-3 mb-6">
+        <button class="px-4 py-2 bg-st-primary text-white rounded-xl text-sm font-medium">All</button>
+        <button class="px-4 py-2 bg-white text-gray-600 rounded-xl text-sm font-medium border border-gray-200 hover:bg-gray-50">Transactions</button>
+        <button class="px-4 py-2 bg-white text-gray-600 rounded-xl text-sm font-medium border border-gray-200 hover:bg-gray-50">Security</button>
+        <button class="px-4 py-2 bg-white text-gray-600 rounded-xl text-sm font-medium border border-gray-200 hover:bg-gray-50">Updates</button>
+      </div>
+
+      <!-- Notifications List -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="divide-y divide-gray-100">
+          <!-- Empty State -->
+          <div class="text-center py-16">
+            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <i class="fas fa-bell-slash text-5xl text-gray-300"></i>
+            </div>
+            <p class="text-gray-600 font-semibold text-xl mb-2">No notifications yet</p>
+            <p class="text-gray-400 max-w-md mx-auto">When you have new notifications about your account activities, security alerts, or system updates, they will appear here.</p>
+          </div>
+          
+          <!-- Sample Notifications (commented for future use)
+          <div class="p-6 hover:bg-blue-50/50 transition-colors cursor-pointer">
+            <div class="flex items-start space-x-4">
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-arrow-down text-green-600"></i>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <h4 class="font-semibold text-gray-900">Deposit Received</h4>
+                  <span class="text-xs text-gray-400">2 hours ago</span>
+                </div>
+                <p class="text-gray-600 text-sm">You received a deposit of BWP 1,500.00 to your Savings account (SAV001).</p>
+              </div>
+              <div class="w-2 h-2 bg-st-primary rounded-full flex-shrink-0 mt-2"></div>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+
+      <!-- Notification Settings Card -->
+      <div class="mt-8 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Notification Preferences</h3>
+        <div class="space-y-4">
+          <div class="flex items-center justify-between py-3 border-b border-gray-100">
+            <div>
+              <p class="font-medium text-gray-900">Transaction Alerts</p>
+              <p class="text-sm text-gray-500">Get notified for deposits, withdrawals, and transfers</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" checked class="sr-only peer">
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-st-primary"></div>
+            </label>
+          </div>
+          <div class="flex items-center justify-between py-3 border-b border-gray-100">
+            <div>
+              <p class="font-medium text-gray-900">Security Alerts</p>
+              <p class="text-sm text-gray-500">Login attempts and password changes</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" checked class="sr-only peer">
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-st-primary"></div>
+            </label>
+          </div>
+          <div class="flex items-center justify-between py-3">
+            <div>
+              <p class="font-medium text-gray-900">Marketing Updates</p>
+              <p class="text-sm text-gray-500">News, offers, and promotional content</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" class="sr-only peer">
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-st-primary"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

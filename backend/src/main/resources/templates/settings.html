@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecureTrust Bank - Settings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'st-primary': '#0066FF',
+            'st-secondary': '#00D4AA',
+            'st-dark': '#0A1628',
+            'st-accent': '#7C3AED',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sidebar-link.active { background: linear-gradient(90deg, rgba(0,102,255,0.1) 0%, transparent 100%); border-left: 3px solid #0066FF; }
+    .sidebar-link:hover { background: rgba(0,102,255,0.05); }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Top Header -->
+  <header class="bg-st-dark text-white fixed top-0 left-0 right-0 z-50 shadow-xl">
+    <div class="flex items-center justify-between h-16 px-6">
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-st-primary to-st-secondary rounded-xl flex items-center justify-center shadow-lg">
+            <i class="fas fa-shield-alt text-white text-sm"></i>
+          </div>
+          <div class="hidden md:block">
+            <h1 class="text-lg font-bold">SecureTrust</h1>
+            <p class="text-xs text-gray-400 -mt-1">Banking System</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <a href="/notifications" class="p-2.5 bg-white/10 rounded-xl hover:bg-white/20 transition-colors relative">
+          <i class="fas fa-bell text-gray-300"></i>
+          <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">0</span>
+        </a>
+        <a href="/settings" class="p-2.5 bg-st-primary/30 rounded-xl hover:bg-white/20 transition-colors">
+          <i class="fas fa-cog text-white"></i>
+        </a>
+        <div class="h-8 w-px bg-gray-700 mx-2"></div>
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 bg-gradient-to-br from-st-primary to-st-accent rounded-xl flex items-center justify-center">
+            <span class="text-white font-bold text-sm" th:text="${session.isAdmin != null && session.isAdmin ? 'AD' : 'CU'}">AD</span>
+          </div>
+          <div class="hidden md:block">
+            <p class="text-sm font-medium" th:text="${session.user}">user@securetrust.com</p>
+            <p class="text-xs text-gray-400" th:text="${session.isAdmin != null && session.isAdmin ? 'Administrator' : 'Customer'}">User</p>
+          </div>
+        </div>
+        <a href="/logout" class="ml-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-xl hover:bg-red-500/30 transition-colors flex items-center text-sm font-medium">
+          <i class="fas fa-sign-out-alt mr-2"></i>
+          <span class="hidden md:inline">Logout</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex pt-16">
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-gray-100 shadow-sm">
+      <nav class="p-4 space-y-2">
+        <a th:href="${session.isAdmin != null && session.isAdmin ? '/dashboard' : '/customer-portal'}" class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-th-large text-gray-500"></i>
+          </div>
+          <span>Dashboard</span>
+        </a>
+        
+        <a th:if="${session.isAdmin != null && session.isAdmin}" href="/customers" class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-users text-gray-500"></i>
+          </div>
+          <span>Customers</span>
+        </a>
+        
+        <a th:if="${session.isAdmin != null && session.isAdmin}" href="/transactions" class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-exchange-alt text-gray-500"></i>
+          </div>
+          <span>Transactions</span>
+        </a>
+
+        <div class="pt-6 pb-2">
+          <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Settings</p>
+        </div>
+        
+        <a href="/notifications" class="sidebar-link flex items-center px-4 py-3 text-gray-600 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-bell text-gray-500"></i>
+          </div>
+          <span>Notifications</span>
+        </a>
+        
+        <a href="/settings" class="sidebar-link active flex items-center px-4 py-3 text-gray-700 rounded-xl transition-all">
+          <div class="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+            <i class="fas fa-cog text-st-primary"></i>
+          </div>
+          <span class="font-medium">Settings</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-64 flex-1 p-8">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Settings</h1>
+        <p class="text-gray-500 mt-1">Manage your account preferences and security</p>
+      </div>
+
+      <!-- Success/Error Messages -->
+      <div th:if="${successMessage}" class="mb-6 p-5 bg-green-50 border border-green-200 rounded-2xl flex items-center">
+        <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+          <i class="fas fa-check text-green-600 text-2xl"></i>
+        </div>
+        <div>
+          <p class="font-bold text-green-800 text-lg">Success!</p>
+          <p class="text-green-600" th:text="${successMessage}"></p>
+        </div>
+      </div>
+      <div th:if="${errorMessage}" class="mb-6 p-5 bg-red-50 border border-red-200 rounded-2xl flex items-center">
+        <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mr-4">
+          <i class="fas fa-exclamation text-red-600 text-2xl"></i>
+        </div>
+        <div>
+          <p class="font-bold text-red-800 text-lg">Error</p>
+          <p class="text-red-600" th:text="${errorMessage}"></p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column - Settings Sections -->
+        <div class="lg:col-span-2 space-y-6">
+          <!-- Profile Settings -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="p-6 border-b border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 flex items-center">
+                <i class="fas fa-user-circle text-st-primary mr-3"></i>Profile Settings
+              </h3>
+            </div>
+            <div class="p-6 space-y-4">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                <input type="email" th:value="${session.user}" disabled
+                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-50 text-gray-600">
+                <p class="text-xs text-gray-400 mt-1">Contact support to change your email address</p>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Display Name</label>
+                <input type="text" th:value="${session.customerName != null ? session.customerName : session.user}" 
+                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary">
+              </div>
+            </div>
+          </div>
+
+          <!-- Security Settings -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="p-6 border-b border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 flex items-center">
+                <i class="fas fa-shield-alt text-green-600 mr-3"></i>Security Settings
+              </h3>
+            </div>
+            <div class="p-6 space-y-6">
+              <!-- Change Password -->
+              <div>
+                <h4 class="font-semibold text-gray-900 mb-4">Change Password</h4>
+                <form th:action="@{/settings/change-password}" method="post" class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
+                    <input type="password" name="currentPassword" required
+                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                    <input type="password" name="newPassword" required
+                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
+                    <input type="password" name="confirmPassword" required
+                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-st-primary">
+                  </div>
+                  <button type="submit" class="px-6 py-3 bg-st-primary text-white rounded-xl hover:bg-blue-700 transition-colors font-medium">
+                    <i class="fas fa-key mr-2"></i>Update Password
+                  </button>
+                </form>
+              </div>
+
+              <hr class="border-gray-100">
+
+              <!-- Two-Factor Authentication -->
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-semibold text-gray-900">Two-Factor Authentication</h4>
+                  <p class="text-sm text-gray-500">Add an extra layer of security to your account</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-st-primary"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Appearance Settings -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="p-6 border-b border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 flex items-center">
+                <i class="fas fa-palette text-purple-600 mr-3"></i>Appearance
+              </h3>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="font-semibold text-gray-900">Dark Mode</h4>
+                  <p class="text-sm text-gray-500">Switch between light and dark themes</p>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-100 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-st-primary"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column - Quick Info -->
+        <div class="space-y-6">
+          <!-- Account Info Card -->
+          <div class="bg-gradient-to-br from-st-dark to-gray-800 rounded-2xl p-6 text-white">
+            <h3 class="text-lg font-bold mb-4 flex items-center">
+              <i class="fas fa-info-circle mr-2 text-st-secondary"></i>Account Info
+            </h3>
+            <div class="space-y-4">
+              <div>
+                <p class="text-gray-400 text-sm">Account Type</p>
+                <p class="font-semibold" th:text="${session.isAdmin != null && session.isAdmin ? 'Administrator' : 'Customer'}">User Type</p>
+              </div>
+              <div>
+                <p class="text-gray-400 text-sm">Email</p>
+                <p class="font-semibold break-all" th:text="${session.user}">user@email.com</p>
+              </div>
+              <div>
+                <p class="text-gray-400 text-sm">Status</p>
+                <span class="inline-flex items-center px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium">
+                  <span class="w-2 h-2 bg-green-400 rounded-full mr-2"></span>Active
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Help & Support -->
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+              <i class="fas fa-headset text-orange-500 mr-3"></i>Need Help?
+            </h3>
+            <div class="space-y-3">
+              <a href="#" class="flex items-center text-gray-600 hover:text-st-primary transition-colors">
+                <i class="fas fa-book w-6 mr-3 text-gray-400"></i>
+                <span>Help Center</span>
+              </a>
+              <a href="#" class="flex items-center text-gray-600 hover:text-st-primary transition-colors">
+                <i class="fas fa-envelope w-6 mr-3 text-gray-400"></i>
+                <span>Contact Support</span>
+              </a>
+              <a href="#" class="flex items-center text-gray-600 hover:text-st-primary transition-colors">
+                <i class="fas fa-phone w-6 mr-3 text-gray-400"></i>
+                <span>+267 3123456</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="bg-red-50 rounded-2xl border border-red-200 p-6">
+            <h3 class="text-lg font-bold text-red-800 mb-2 flex items-center">
+              <i class="fas fa-exclamation-triangle mr-2"></i>Danger Zone
+            </h3>
+            <p class="text-red-600 text-sm mb-4">These actions are irreversible. Please proceed with caution.</p>
+            <button class="w-full px-4 py-3 bg-red-100 text-red-700 rounded-xl hover:bg-red-200 transition-colors font-medium text-sm">
+              <i class="fas fa-trash mr-2"></i>Delete Account
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

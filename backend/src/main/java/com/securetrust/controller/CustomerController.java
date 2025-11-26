@@ -42,8 +42,15 @@ public class CustomerController {
             .mapToInt(c -> c.getAccounts() != null ? c.getAccounts().size() : 0)
             .sum();
         
+        // Calculate total balance
+        double totalBalance = customers.stream()
+            .flatMap(c -> c.getAccounts() != null ? c.getAccounts().stream() : java.util.stream.Stream.empty())
+            .mapToDouble(a -> a.getBalance() != null ? a.getBalance() : 0.0)
+            .sum();
+        
         model.addAttribute("customers", customers);
         model.addAttribute("totalAccounts", totalAccounts);
+        model.addAttribute("totalBalance", totalBalance);
         return "customers";
     }
     
@@ -75,6 +82,7 @@ public class CustomerController {
                              @RequestParam String email,
                              @RequestParam String customerType,
                              @RequestParam(required = false) String companyName,
+                             @RequestParam(required = false) String password,
                              HttpSession session,
                              RedirectAttributes redirectAttributes) {
         if (session.getAttribute("user") == null) {
@@ -100,6 +108,7 @@ public class CustomerController {
             customer.setAddress(address);
             customer.setPhoneNumber(phoneNumber);
             customer.setEmail(email);
+            customer.setPassword(password);
             
             customerRepository.save(customer);
             redirectAttributes.addFlashAttribute("successMessage", "Customer added successfully!");

@@ -57,22 +57,43 @@ mvn spring-boot:run
 ```
 
 ## Login Credentials
+
+### Administrator Login
 - **Email:** `admin@securetrust.com`  
 - **Password:** `Admin123!`
 
+### Customer Login
+Customers can login to view their own accounts and transactions.
+- **Email:** `john.doe@securetrust.com`  
+- **Password:** `password123`
+
+(Other customers: `jane.smith@securetrust.com`, `bob.johnson@securetrust.com`, `finance@techcorp.co.bw` - all with password `password123`)
+
 ## What You Can Do
+
+### As Administrator
 ✅ **View Dashboard** - See account statistics and charts  
 ✅ **Manage Customers** - View customer profiles and accounts  
 ✅ **Deposit Funds** - Add money to any account  
 ✅ **Withdraw Funds** - Remove money from accounts (with balance validation)  
 ✅ **Transfer Money** - Transfer between accounts  
 ✅ **View Transactions** - Complete transaction history with audit trail  
+✅ **Notifications** - View and manage notifications  
+✅ **Settings** - Manage account preferences and security  
+
+### As Customer
+✅ **View Customer Portal** - See personal account balances and transactions  
+✅ **Notifications** - View notifications  
+✅ **Settings** - Change password and manage account preferences  
 
 ## Application URLs
 - **Login:** `http://localhost:8080/login`
-- **Dashboard:** `http://localhost:8080/dashboard`
+- **Dashboard (Admin):** `http://localhost:8080/dashboard`
+- **Customer Portal:** `http://localhost:8080/customer-portal`
 - **Customers:** `http://localhost:8080/customers`
 - **Transactions:** `http://localhost:8080/transactions`
+- **Notifications:** `http://localhost:8080/notifications`
+- **Settings:** `http://localhost:8080/settings`
 
 ## Troubleshooting
 
