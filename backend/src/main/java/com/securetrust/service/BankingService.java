@@ -131,11 +131,13 @@ public class BankingService {
     
     /**
      * Pay monthly interest to an account based on its type and customer type.
+     * Note: These are monthly interest rates as specified in the assignment requirements.
+     * 
      * Investment accounts: 5% monthly interest
      * Savings accounts: 
      *   - Individual customers: 2.5% monthly interest
      *   - Company customers: 7.5% monthly interest
-     * Cheque accounts: 0% (no interest)
+     * Cheque accounts: 0% (no interest - as per assignment)
      */
     @Transactional
     public Transaction payInterest(String accountNumber) {
@@ -147,22 +149,22 @@ public class BankingService {
         
         switch (account.getAccountType()) {
             case INVESTMENT:
-                interestRate = 0.05; // 5% monthly
+                interestRate = 0.05; // 5% monthly as per assignment
                 rateDescription = "5%";
                 break;
             case SAVINGS:
                 // Check if customer is company or individual
                 if (account.getCustomer().isCompany()) {
-                    interestRate = 0.075; // 7.5% monthly for companies
+                    interestRate = 0.075; // 7.5% monthly for companies as per assignment
                     rateDescription = "7.5% (Company)";
                 } else {
-                    interestRate = 0.025; // 2.5% monthly for individuals
+                    interestRate = 0.025; // 2.5% monthly for individuals as per assignment
                     rateDescription = "2.5% (Individual)";
                 }
                 break;
             case CHEQUE:
             default:
-                interestRate = 0.0; // No interest for cheque accounts
+                interestRate = 0.0; // No interest for cheque accounts as per assignment
                 rateDescription = "0%";
                 break;
         }

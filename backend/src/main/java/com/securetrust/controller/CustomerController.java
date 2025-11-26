@@ -83,7 +83,9 @@ public class CustomerController {
         
         try {
             Customer customer = new Customer();
-            customer.setCustomerId("CUST" + String.format("%03d", customerRepository.count() + 1));
+            // Generate unique customer ID using timestamp to avoid duplicates
+            String customerId = "CUST" + System.currentTimeMillis() % 1000000;
+            customer.setCustomerId(customerId);
             customer.setCustomerType(CustomerType.valueOf(customerType));
             
             if (customer.getCustomerType() == CustomerType.COMPANY) {
