@@ -5,6 +5,8 @@ data/
 *.war
 *.ear
 .idea/
-.vscode/
+# VS Code - exclude user-specific files but allow shared settings
+.vscode/*
+!.vscode/settings.json
 *.iml
 .DS_Store

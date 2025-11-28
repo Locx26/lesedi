@@ -121,3 +121,25 @@ rm -rf backend/data/
 - **Database:** H2 (embedded, file-based)
 - **Frontend:** Thymeleaf, Tailwind CSS, Chart.js
 - **Build Tool:** Maven
+
+## Removing Copilot as Co-Author
+
+This repository is configured to prevent GitHub Copilot from being added as a co-author in commit messages. The shared VS Code settings (`.vscode/settings.json`) disable Copilot suggestions in the commit message input field.
+
+### For VS Code Users
+The repository's `.vscode/settings.json` already includes the setting to disable Copilot co-authoring:
+```json
+{
+  "github.copilot.enable": {
+    "scminput": false
+  }
+}
+```
+
+### For Other IDEs
+If you're using a different IDE (JetBrains, etc.), check your IDE's Copilot settings and disable commit message suggestions.
+
+### Manual Removal
+If you see "Co-authored-by: Copilot" in your commit messages, you can:
+1. Edit the commit message before committing to remove the co-author line
+2. Use `git commit --amend` to edit the most recent commit message (before pushing)
